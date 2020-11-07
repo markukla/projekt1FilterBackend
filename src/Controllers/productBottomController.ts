@@ -2,17 +2,17 @@ import * as express from 'express';
 
 import Controller from 'interfaces/controller.interface';
 
-import CreateProductTypeDto from "./createProductType.dto";
+import CreateProductTypeDto from "../Models/Products/createProductType.dto";
 
-import validationMiddleware from "../../middleware/validation.middleware";
-import ProductTopService from "./ProductTopRepository";
-import CreateProductTopDto from "./createProductTop.dto";
-import ProductTop from "./productTop.entity";
-import ProductTopNotFoundException from "../../Exceptions/ProductTopNotFoundException";
-import ProductBottomService from "./productBottomRepository";
-import CreateProductBottomDto from "./createProductBottom.dto";
-import ProductBottom from "./productBottom.entity";
-import ProductBottomNotFoundException from "../../Exceptions/ProductBottomNotFoundException";
+import validationMiddleware from "../middleware/validation.middleware";
+import ProductTopService from "../RepositoryServices/ProductTopRepository";
+import CreateProductTopDto from "../Models/Products/createProductTop.dto";
+import ProductTop from "../Models/Products/productTop.entity";
+import ProductTopNotFoundException from "../Exceptions/ProductTopNotFoundException";
+import ProductBottomService from "../RepositoryServices/productBottomRepository";
+import CreateProductBottomDto from "../Models/Products/createProductBottom.dto";
+import ProductBottom from "../Models/Products/productBottom.entity";
+import ProductBottomNotFoundException from "../Exceptions/ProductBottomNotFoundException";
 
 
 class ProductBottomController implements Controller {

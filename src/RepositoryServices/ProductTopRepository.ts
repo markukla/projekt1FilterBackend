@@ -1,4 +1,4 @@
-import RepositoryService from "../../interfaces/service.interface";
+import RepositoryService from "../interfaces/service.interface";
 
 
 import {DeleteResult, getRepository, UpdateResult} from "typeorm";
@@ -6,14 +6,14 @@ import {DeleteResult, getRepository, UpdateResult} from "typeorm";
 
 
 
-import ProductBottom from "./productBottom.entity";
-import ProductBottomNotFoundException from "../../Exceptions/ProductBottomNotFoundException";
-import CreateProductBottomDto from "./createProductBottom.dto";
-import ProductBottomAlreadyExistsException from "../../Exceptions/ProductBottomAlreadyExistsException";
-import ProductTop from "./productTop.entity";
-import ProductTopNotFoundException from "../../Exceptions/ProductTopNotFoundException";
-import CreateProductTopDto from "./createProductTop.dto";
-import ProductTopAlreadyExistsException from "../../Exceptions/ProductTopAlreadyExistsException";
+import ProductBottom from "../Models/Products/productBottom.entity";
+import ProductBottomNotFoundException from "../Exceptions/ProductBottomNotFoundException";
+import CreateProductBottomDto from "../Models/Products/createProductBottom.dto";
+import ProductBottomAlreadyExistsException from "../Exceptions/ProductBottomAlreadyExistsException";
+import ProductTop from "../Models/Products/productTop.entity";
+import ProductTopNotFoundException from "../Exceptions/ProductTopNotFoundException";
+import CreateProductTopDto from "../Models/Products/createProductTop.dto";
+import ProductTopAlreadyExistsException from "../Exceptions/ProductTopAlreadyExistsException";
 
 
 class ProductTopService implements RepositoryService {

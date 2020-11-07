@@ -2,11 +2,11 @@ import * as express from 'express';
 
 import Controller from 'interfaces/controller.interface';
 
-import CreateProductTypeDto from "./createProductType.dto";
-import ProductTypeService from "./productTypeRepositoryService";
-import ProductType from "./productType.entity";
-import ProductTypeNotFoundException from "../../Exceptions/ProductTypeNotFoundException";
-import validationMiddleware from "../../middleware/validation.middleware";
+import CreateProductTypeDto from "../Models/Products/createProductType.dto";
+import ProductTypeService from "../RepositoryServices/productTypeRepositoryService";
+import ProductType from "../Models/Products/productType.entity";
+import ProductTypeNotFoundException from "../Exceptions/ProductTypeNotFoundException";
+import validationMiddleware from "../middleware/validation.middleware";
 
 
 class ProductTypeController implements Controller {

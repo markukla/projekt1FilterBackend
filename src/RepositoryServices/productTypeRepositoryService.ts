@@ -1,13 +1,13 @@
-import RepositoryService from "../../interfaces/service.interface";
+import RepositoryService from "../interfaces/service.interface";
 
 
 import {DeleteResult, getRepository, UpdateResult} from "typeorm";
 
 
-import ProductType from "./productType.entity";
-import ProductTypeNotFoundException from "../../Exceptions/ProductTypeNotFoundException";
-import CreateProductTypeDto from "./createProductType.dto";
-import ProductTypeAlreadyExistsException from "../../Exceptions/ProductTypeAlreadyExistException";
+import ProductType from "../Models/Products/productType.entity";
+import ProductTypeNotFoundException from "../Exceptions/ProductTypeNotFoundException";
+import CreateProductTypeDto from "../Models/Products/createProductType.dto";
+import ProductTypeAlreadyExistsException from "../Exceptions/ProductTypeAlreadyExistException";
 
 
 class ProductTypeService implements RepositoryService {

@@ -14,9 +14,9 @@ import {connectToDatabase} from "./utils/DatabaseUtil/manageDatabaseConnection";
 import MaterialController from "./Controllers/materialController";
 import ProductController from "./Controllers/productController";
 import OrderController from "./Controllers/orderController";
-import ProductTypeController from "./Models/Products/productTypeController";
-import ProductTopController from "./Models/Products/productTopController";
-import ProductBottomController from "./Models/Products/productBottomController";
+import ProductTypeController from "./Controllers/productTypeController";
+import ProductTopController from "./Controllers/productTopController";
+import ProductBottomController from "./Controllers/productBottomController";
 
 validateEnv();
 

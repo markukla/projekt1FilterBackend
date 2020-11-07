@@ -1,18 +1,13 @@
-import RepositoryService from "../../interfaces/service.interface";
+import RepositoryService from "../interfaces/service.interface";
 
 
+
+
+import ProductBottom from "../Models/Products/productBottom.entity";
+import ProductBottomNotFoundException from "../Exceptions/ProductBottomNotFoundException";
+import CreateProductBottomDto from "../Models/Products/createProductBottom.dto";
+import ProductBottomAlreadyExistsException from "../Exceptions/ProductBottomAlreadyExistsException";
 import {DeleteResult, getRepository, UpdateResult} from "typeorm";
-
-
-
-import ProductType from "./productType.entity";
-import ProductTypeNotFoundException from "../../Exceptions/ProductTypeNotFoundException";
-import CreateProductTypeDto from "./createProductType.dto";
-import ProductTypeAlreadyExistsException from "../../Exceptions/ProductTypeAlreadyExistException";
-import ProductBottom from "./productBottom.entity";
-import ProductBottomNotFoundException from "../../Exceptions/ProductBottomNotFoundException";
-import CreateProductBottomDto from "./createProductBottom.dto";
-import ProductBottomAlreadyExistsException from "../../Exceptions/ProductBottomAlreadyExistsException";
 
 
 class ProductBottomService implements RepositoryService {

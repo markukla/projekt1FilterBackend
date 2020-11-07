@@ -2,13 +2,13 @@ import * as express from 'express';
 
 import Controller from 'interfaces/controller.interface';
 
-import CreateProductTypeDto from "./createProductType.dto";
+import CreateProductTypeDto from "../Models/Products/createProductType.dto";
 
-import validationMiddleware from "../../middleware/validation.middleware";
-import ProductTopService from "./ProductTopRepository";
-import CreateProductTopDto from "./createProductTop.dto";
-import ProductTop from "./productTop.entity";
-import ProductTopNotFoundException from "../../Exceptions/ProductTopNotFoundException";
+import validationMiddleware from "../middleware/validation.middleware";
+import ProductTopService from "../RepositoryServices/ProductTopRepository";
+import CreateProductTopDto from "../Models/Products/createProductTop.dto";
+import ProductTop from "../Models/Products/productTop.entity";
+import ProductTopNotFoundException from "../Exceptions/ProductTopNotFoundException";
 
 
 class ProductTopController implements Controller {
