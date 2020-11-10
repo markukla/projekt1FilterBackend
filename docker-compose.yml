@@ -9,6 +9,8 @@ services:
       - /data/postgres:/data/postgres
     env_file:
       - docker.env
+    command:
+      -p 5436
     networks:
       - postgres
 
@@ -22,7 +24,7 @@ services:
       ports:
         - "5437:5437"
       command:
-        -p 5433
+        -p 5437
       networks:
         - postgres
 

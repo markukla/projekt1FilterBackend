@@ -8,6 +8,7 @@ import 'es6-shim';
 import  'dotenv/config';
 import * as cookieParser from "cookie-parser";
 import * as fs from "fs";
+import setCORSAllowHeader from "./middleware/addCORSOrginAccessHeader";
 const multer = require("multer");
 
 const path = require('path');
@@ -39,6 +40,7 @@ class App {
 
 
     private initializeMiddlewares() {
+        this.app.use(setCORSAllowHeader);
         this.app.use(express.static(__dirname + '../public'));
         this.app.set('views', path.join(__dirname, 'views'));
         this.app.set('view engine', 'ejs');
