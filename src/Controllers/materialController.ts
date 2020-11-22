@@ -37,7 +37,7 @@ class MaterialController implements Controller{
         this.router.patch(`${this.path}/:id`,/*authMiddleware,adminAuthorizationMiddleware,*/ validationMiddleware(CreateMaterialDto, true), this.updateMaterialById);
         this.router.delete(`${this.path}/:id`/*,authMiddleware,adminAuthorizationMiddleware*/, this.deleteOneMaterialById);
         this.router.post(this.path,/*authMiddleware,adminAuthorizationMiddleware,*/validationMiddleware(CreateMaterialDto), this.addOneMaterial);
-        this.router.get(`${this.path}/?code`,this.findOneMaterialByCode);
+        this.router.get(`${this.path}/materialCode/:code`,this.materialWithThisCodeExist);
     }
 //findOneMaterialByCode
     private addOneMaterial = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
@@ -134,15 +134,21 @@ class MaterialController implements Controller{
 
     }
 
-    private findOneMaterialByCode = async (request: express.Request, response: express.Response, next: express.NextFunction)=>{
-        const queryObject = url.parse(request.url,true).query; // json containing params names and values
+    private materialWithThisCodeExist = async (request: express.Request, response: express.Response, next: express.NextFunction)=>{
 
-        const code = queryObject.code;
+
+        const code = request.params.code;
+        let isTaken: boolean =false;
         try {
             const foundMaterial = await this.service.findOneMaterialByMaterialCode(code);
             if (foundMaterial) {
-                response.send(foundMaterial);
+                isTaken= true;
+
             }
+            else {
+                isTaken= false;
+            }
+            response.send(isTaken);
         }
         catch (error) {
             next(error);
