@@ -19,6 +19,7 @@ import MaterialService from "../RepositoryServices/materialRepositoryService";
 import CreateMaterialDto from "../Models/Materials/material.dto";
 import MaterialNotFoundExceptionn from "../Exceptions/MaterialNotFoundException";
 import setCORSAllowHeader from "../middleware/addCORSOrginAccessHeader";
+const url = require('url');
 
 
 
@@ -32,12 +33,13 @@ class MaterialController implements Controller{
 
     private initializeRoutes() {
         this.router.get(this.path, /*authMiddleware,adminAuthorizationMiddleware,*/this.getAllMaterials);
-        this.router.get(`${this.path}/:id`,authMiddleware,adminAuthorizationMiddleware, this.getOneMaterialById);
-        this.router.patch(`${this.path}/:id`,authMiddleware,adminAuthorizationMiddleware, validationMiddleware(CreateMaterialDto, true), this.updateMaterialById);
-        this.router.delete(`${this.path}/:id`,authMiddleware,adminAuthorizationMiddleware, this.deleteOneMaterialById);
-        this.router.post(this.path,authMiddleware,adminAuthorizationMiddleware,validationMiddleware(CreateMaterialDto), this.addOneMaterial);
+        this.router.get(`${this.path}/:id`,/*authMiddleware,adminAuthorizationMiddleware,*/ this.getOneMaterialById);
+        this.router.patch(`${this.path}/:id`,/*authMiddleware,adminAuthorizationMiddleware,*/ validationMiddleware(CreateMaterialDto, true), this.updateMaterialById);
+        this.router.delete(`${this.path}/:id`/*,authMiddleware,adminAuthorizationMiddleware*/, this.deleteOneMaterialById);
+        this.router.post(this.path,/*authMiddleware,adminAuthorizationMiddleware,*/validationMiddleware(CreateMaterialDto), this.addOneMaterial);
+        this.router.get(`${this.path}/?code`,this.findOneMaterialByCode);
     }
-
+//findOneMaterialByCode
     private addOneMaterial = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
         const materialData: CreateMaterialDto = request.body;
         try {
@@ -132,6 +134,23 @@ class MaterialController implements Controller{
 
     }
 
+    private findOneMaterialByCode = async (request: express.Request, response: express.Response, next: express.NextFunction)=>{
+        const queryObject = url.parse(request.url,true).query; // json containing params names and values
+
+        const code = queryObject.code;
+        try {
+            const foundMaterial = await this.service.findOneMaterialByMaterialCode(code);
+            if (foundMaterial) {
+                response.send(foundMaterial);
+            }
+        }
+        catch (error) {
+            next(error);
+        }
+
+
+
+    }
 
 
 
