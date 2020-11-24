@@ -19,6 +19,7 @@ import MaterialService from "../RepositoryServices/materialRepositoryService";
 import CreateMaterialDto from "../Models/Materials/material.dto";
 import MaterialNotFoundExceptionn from "../Exceptions/MaterialNotFoundException";
 import setCORSAllowHeader from "../middleware/addCORSOrginAccessHeader";
+import {MaterialEndpoint} from "../Models/Materials/materialOnEndpoint";
 const url = require('url');
 
 
@@ -44,8 +45,9 @@ class MaterialController implements Controller{
         const materialData: CreateMaterialDto = request.body;
         try {
             const material:Material = await this.service.addOneMaterial(materialData);
-
-            response.send(material);
+const materialEndpoint: MaterialEndpoint = {...material};
+            response.json(
+                materialEndpoint);
         } catch (error) {
             next(error);
         }

@@ -38,8 +38,8 @@ class AuthenticationController implements Controller {
     const loggedUser:LoggedUser=await this.service.login(logInData);
 
       if(loggedUser){
-
-        response.setHeader('Set-Cookie', [this.service.createCookie(loggedUser.tokenData)]);
+//Set-Cookie'
+        response.setHeader('Authorization', [this.service.createCookie(loggedUser.tokenData)]);
         response.send(loggedUser);
       } else {
         next(new WrongCredentialsException());

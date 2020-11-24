@@ -12,24 +12,30 @@ import BlackListedToken from "../Models/BlackListedTokenEntity/blackListedToken.
 
 
 async function authMiddleware(request: RequestWithUser, response: Response, next: NextFunction) {
-    const cookies = request.cookies;
+    /*  const cookies = request.cookies;
     console.log(cookies.Authorization);
     const manager = getManager();
 
     if (cookies && cookies.Authorization) {
+        const secret = process.env.JWT_SECRET;*/
+    const authorization = request.header('Authorization');
+
+    const manager = getManager();
+
+    if (authorization) {
         const secret = process.env.JWT_SECRET;
 
 
         try {
             const blackListedToken = await manager.findOne(BlackListedToken, {
-                blacklistedToken: cookies.Authorization
+                blacklistedToken: authorization
             });
             console.log(`blacklisted token= ${blackListedToken}`);
             if (blackListedToken!==undefined) {
                 console.log("blacklisted token if executed");
                 next(new WrongAuthenticationTokenException());
             }
-            const verificationResponse = jwt.verify(cookies.Authorization, secret) as DataStoredInToken;
+            const verificationResponse = jwt.verify(authorization, secret) as DataStoredInToken;
             console.log(verificationResponse);
 
             const user: User = await manager.findOne(User, {id: verificationResponse.id}, {relations: ['roles']})

@@ -48,11 +48,12 @@ class AuthenticationService implements RepositoryService{
 
 
     public createCookie(tokenData: TokenData) {
-        return `Authorization=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn}`;
+        //Authorization=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn}
+        return `${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn}`;
     }
 
     public createToken(user: User ): TokenData {
-        const expiresIn = 60 * 60; // an hour
+        const expiresIn = 3600 // an hour
         const secret = process.env.JWT_SECRET;
 
         const dataStoredInToken: DataStoredInToken = {
