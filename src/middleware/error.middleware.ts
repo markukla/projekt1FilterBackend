@@ -7,9 +7,9 @@ function errorMiddleware(error: HttpException, request: Request, response: Respo
     response
         .status(status)
         .send({
-            status,
-            messageTouser: messageToUser,
-            errorMessage:`${error.message}`
+            status: status,
+            message: `${error.message}`,
+
         })
 }
 

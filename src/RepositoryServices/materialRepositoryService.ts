@@ -4,6 +4,7 @@ import Material from "../Models/Materials/material.entity";
 import MaterialNotFoundExceptionn from "../Exceptions/MaterialNotFoundException";
 import CreateMaterialDto from "../Models/Materials/material.dto";
 import MaterialAlreadyExistsException from "../Exceptions/MaterialAlreadyExistsException";
+import User from "../Models/Users/user.entity";
 
 
 class MaterialService implements RepositoryService{
@@ -66,29 +67,33 @@ class MaterialService implements RepositoryService{
             const materialWithThisCodeInDatabase=await this.findOneMaterialByMaterialCode(createMaterialDto.materialCode);
             const materialWithThisNameInDatabase=await this.findOneMaterialByMaterialName(createMaterialDto.materialName);
             // do not allow to update if other material with this code or name already exist and throw exception
-            if((materialWithThisCodeInDatabase&&materialWithThisNameInDatabase)){
-                if((materialWithThisCodeInDatabase.id!==Number(id)||materialWithThisNameInDatabase.id!==Number(id))){
+            if(materialWithThisCodeInDatabase&&materialWithThisNameInDatabase){
+                if((materialWithThisCodeInDatabase.id!==Number(id))&&(materialWithThisNameInDatabase.id!==Number(id))){
                     throw new MaterialAlreadyExistsException(createMaterialDto.materialCode,createMaterialDto.materialName);
                 }
 
             }
-            else if(materialWithThisCodeInDatabase){
+             if(materialWithThisCodeInDatabase){
                 if(materialWithThisCodeInDatabase.id!==Number(id)){
                     throw new MaterialAlreadyExistsException(createMaterialDto.materialCode,null);
                 }
 
             }
-            else if(materialWithThisNameInDatabase){
+             if(materialWithThisNameInDatabase){
                 if(materialWithThisNameInDatabase.id!==Number(id)){
                     throw new MaterialAlreadyExistsException(null,createMaterialDto.materialName);
                 }
 
             }
-            const updateResult:UpdateResult=await this.repository.update(id,createMaterialDto);
-            if(updateResult.affected===1){
-                const updatedMaterial:Material=await this.findOneMaterialById(id);
+            const materialToSave = this.repository.create( {
+                ...createMaterialDto,
+                id: Number(id)
+
+            });
+            const updatedMaterial=await this.repository.save(materialToSave);
+
                 return updatedMaterial;
-            }
+
 
         }
 
