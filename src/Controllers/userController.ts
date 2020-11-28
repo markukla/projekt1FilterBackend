@@ -32,6 +32,9 @@ class UserController implements Controller{
         this.router.patch(`${this.path}/:id/changePassword`,authMiddleware,adminAuthorizationMiddleware, validationMiddleware(ChangePasswordDto, true), this.changePasswordByAdmin);
         this.router.delete(`${this.path}/:id`,authMiddleware,adminAuthorizationMiddleware, this.deleteOneUserById);
         this.router.post(this.path,validationMiddleware(CreatePrivilegedUserDto), this.registerOneUser);
+     this.router.get(`${this.path}/admins`,authMiddleware,adminAuthorizationMiddleware, this.getAllAdmins);
+        this.router.get(`${this.path}/editors`,authMiddleware,adminAuthorizationMiddleware, this.getAllEditors);
+        this.router.get(`${this.path}/emails/:email`,authMiddleware,adminAuthorizationMiddleware, this.isEmailTaken)
     }
 
     private registerOneUser = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
@@ -40,6 +43,22 @@ class UserController implements Controller{
             const user = await this.service.registerPrivilegedUser(userData);
 
             response.send(user);
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    private isEmailTaken = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
+        const email:string = request.params.email;
+        try {
+            const user = await this.service.findUserByEmail(email);
+            if(user){
+                response.send(true);
+            }
+            if(!user){
+                response.send(false);
+            }
+
         } catch (error) {
             next(error);
         }
@@ -88,6 +107,59 @@ catch (error) {
 
 
 }
+
+    private getAllAdmins = async (request: express.Request, response: express.Response, next: express.NextFunction)=>
+    {
+        try{
+            const users:User[]=await this.service.getAllAdmins();
+
+            /*
+            one way to hide information which sholul be removed from final endpoint:
+            users.forEach(user=>{
+                user.code=undefined;
+                user.businesPartnerCompanyName=undefined;
+                user.roles=undefined;
+                user.id=undefined;
+                user.password=undefined;
+            });
+        */
+            response.send(users);
+
+
+        }
+        catch (error) {
+            next(error);
+        }
+
+
+    }
+    private getAllEditors = async (request: express.Request, response: express.Response, next: express.NextFunction)=>
+    {
+        try{
+            const users:User[]=await this.service.getAllEditors();
+
+            /*
+            one way to hide information which sholul be removed from final endpoint:
+            users.forEach(user=>{
+                user.code=undefined;
+                user.businesPartnerCompanyName=undefined;
+                user.roles=undefined;
+                user.id=undefined;
+                user.password=undefined;
+            });
+        */
+            response.send(users);
+
+
+        }
+        catch (error) {
+            next(error);
+        }
+
+
+    }
+
+
 
 private getOneUserById = async (request: express.Request, response: express.Response, next: express.NextFunction)=>{
 const id:string=request.params.id;

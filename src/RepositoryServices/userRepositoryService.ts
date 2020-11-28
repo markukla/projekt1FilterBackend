@@ -115,6 +115,41 @@ class UserService implements RepositoryService {
 
         return adminOrEditors;
     }
+    public getAllAdmins = async (): Promise<User[]> => {
+        // in relation option: it takes table name as paramter, not enity name
+
+        const allUsers: User[] = await this.manager.find(User, {relations: ['roles']});
+
+        const admins: User[] = [];
+
+
+        allUsers.forEach(user => {
+            if (this.UserHasAdminRole(user) === true) {
+                admins.push(user);
+            }
+        });
+
+
+        return admins;
+    }
+    public getAllEditors = async (): Promise<User[]> => {
+        // in relation option: it takes table name as paramter, not enity name
+
+        const allUsers: User[] = await this.manager.find(User, {relations: ['roles']});
+
+        const editors: User[] = [];
+
+
+        allUsers.forEach(user => {
+            if (this.UserHasEditorRoleButIsNotAdmin(user) === true) {
+                editors.push(user);
+            }
+        });
+
+
+        return editors;
+    }
+
 
     public findOnePrivilegedUserById = async (id: string): Promise<User> => {
 
