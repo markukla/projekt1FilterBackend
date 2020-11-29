@@ -1,6 +1,6 @@
 import {IsBoolean, IsEmail, IsString} from "class-validator";
 
-class UpdateBussinessPartnerWithoutPasswordAndActive  {
+class UpdateBussinessPartnerWithoutPassword  {
     @IsString()
     fulName: string;
     @IsEmail()
@@ -9,7 +9,9 @@ class UpdateBussinessPartnerWithoutPasswordAndActive  {
     code: string;
     @IsString()
     businesPartnerCompanyName: string;
+    @IsBoolean()
+    active: boolean;
 
 
 }
-export default UpdateBussinessPartnerWithoutPasswordAndActive;
+export default UpdateBussinessPartnerWithoutPassword;

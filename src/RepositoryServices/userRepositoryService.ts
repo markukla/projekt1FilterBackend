@@ -14,7 +14,7 @@ import validatePassword from "../utils/validatePassword/validate.password";
 import UserNotFoundException from "../Exceptions/UserNotFoundException";
 import CreateBusinessPartnerDto from "../Models/Users/BusinessPartner/businessPartner.dto";
 import BusinessPartnerNotFoundException from "../Exceptions/BusinessPartnerNotFoundException";
-import UpdateBussinessPartnerWithoutPasswordAndActive from "../Models/Users/BusinessPartner/modyfyBusinessPartent.dto";
+import UpdateBussinessPartnerWithoutPassword from "../Models/Users/BusinessPartner/modyfyBusinessPartent.dto";
 import UserWithThisEmailDoesNotExistException from "../Exceptions/UserWithThisEmailDoesNotExistException";
 import WeekPasswordException from "../Exceptions/ToWeekPasswordException";
 import PasswordValidationResult from "../utils/validatePassword/passwordValidationResult";
@@ -308,7 +308,7 @@ class UserService implements RepositoryService {
 
     }
 
-    public updatePartnerById = async (id: number, businesesPartnerData: UpdateBussinessPartnerWithoutPasswordAndActive): Promise<User> => {
+    public updatePartnerById = async (id: number, businesesPartnerData: UpdateBussinessPartnerWithoutPassword): Promise<User> => {
         let partnerToupdate: User = await this.findOnePartnerById(String(id));
         if (!partnerToupdate) {
             throw new BusinessPartnerNotFoundException(String(id));

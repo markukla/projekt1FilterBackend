@@ -9,7 +9,7 @@ import CreateBusinessPartnerDto from "../Models/Users/BusinessPartner/businessPa
 import authMiddleware from "../middleware/auth.middleware";
 import editorAuthorizationMiddleware from "../middleware/editorAuthorizationMiddleware";
 import User from "../Models/Users/user.entity";
-import UpdateBussinessPartnerWithoutPasswordAndActive from "../Models/Users/BusinessPartner/modyfyBusinessPartent.dto";
+import UpdateBussinessPartnerWithoutPassword from "../Models/Users/BusinessPartner/modyfyBusinessPartent.dto";
 import BusinessPartnerNotFoundException from "../Exceptions/BusinessPartnerNotFoundException";
 import UserService from "../RepositoryServices/userRepositoryService";
 import CHangePasswordByAdminDto from "../Models/Users/changePasswordByAdmin.dto";
@@ -48,7 +48,7 @@ class BusinessPartnerController implements Controller{
 
 
     private modyfyPartner = async (request: express.Request, response: express.Response, next: express.NextFunction)=>{
-        const partnerData:UpdateBussinessPartnerWithoutPasswordAndActive=request.body;
+        const partnerData:UpdateBussinessPartnerWithoutPassword=request.body;
         const id:number=Number(request.params.id);
         try {
             const modyfiedPartner = await this.service.updatePartnerById(id, partnerData);
