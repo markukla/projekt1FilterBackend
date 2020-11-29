@@ -6,12 +6,10 @@ class UpdatePrivilegedUserWithouTPasswordDto {
 
     @IsEmail()
     email: string;
-
-    @IsBoolean()
-    active: boolean;
-
     @IsBoolean()
     isAdmin: boolean;
+    @IsBoolean()
+    active: boolean;
 
 }
 export default UpdatePrivilegedUserWithouTPasswordDto;

@@ -27,6 +27,9 @@ class AuthenticationService implements RepositoryService{
         const user: User = await this.manager.findOne(User, {email: logInData.email}, {relations: ['roles']});
 
         if (user) {
+            if(!user.active){
+                throw new NotActiveException();
+            }
             const isPasswordMatching = await bcrypt.compare(logInData.password, user.password);
             if (isPasswordMatching) {
 

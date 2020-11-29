@@ -5,7 +5,7 @@ import CreatePrivilegedUserDto from "../Models/Users/PrivilegedUsers/user.dto";
 import CreateBusinessPartnerDto from "../Models/Users/BusinessPartner/businessPartner.dto";
 import {IsBoolean, IsEmail, IsString} from "class-validator";
 import UpdatePrivilegedUserWithouTPasswordDto from "../Models/Users/PrivilegedUsers/modyfyUser.dto";
-import UpdateBussinessPartnerWithoutPassword from "../Models/Users/BusinessPartner/modyfyBusinessPartent.dto";
+import UpdateBussinessPartnerWithoutPasswordAndActive from "../Models/Users/BusinessPartner/modyfyBusinessPartent.dto";
 
 class UsersExampleForTests {
     public hashedPassword: string = "$2b$10$fpooDkA4UaG/9nDsuuUmB.bIUJ7ittTknMl8nEMQ9o28UQPXqdZBC";
@@ -108,7 +108,7 @@ class UsersExampleForTests {
         "active": true,
         "isAdmin": true
     }
-    public updatePartnerDto:UpdateBussinessPartnerWithoutPassword={
+    public updatePartnerDto:UpdateBussinessPartnerWithoutPasswordAndActive={
         "fulName": 'updated fullName',
         "email": 'updated@gmail.com',
         "active": true,

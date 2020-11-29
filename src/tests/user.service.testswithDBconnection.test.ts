@@ -25,7 +25,7 @@ import * as bcrypt from "bcrypt";
 import UserWithThisEmailDoesNotExistException from "../Exceptions/UserWithThisEmailDoesNotExistException";
 import CreateBusinessPartnerDto from "../Models/Users/BusinessPartner/businessPartner.dto";
 import BusinessPartnerNotFoundException from "../Exceptions/BusinessPartnerNotFoundException";
-import UpdateBussinessPartnerWithoutPassword from "../Models/Users/BusinessPartner/modyfyBusinessPartent.dto";
+import UpdateBussinessPartnerWithoutPasswordAndActive from "../Models/Users/BusinessPartner/modyfyBusinessPartent.dto";
 import PasswordValidationResult from "../utils/validatePassword/passwordValidationResult";
 
 
@@ -627,7 +627,7 @@ describe('user service', () => {
                 const partnerInDatabase = usersStabs.activePartnerUserExample.id;//1
                 const takenEmail = usersStabs.inactivePartnerUserExample.email; // email already taken by existing in database partner,
 
-                const updatePartnerDto: UpdateBussinessPartnerWithoutPassword = {
+                const updatePartnerDto: UpdateBussinessPartnerWithoutPasswordAndActive = {
                     ...usersStabs.updatePartnerDto,
                     email: takenEmail
 
@@ -645,7 +645,7 @@ describe('user service', () => {
                 const usersStabs = new UsersExampleForTests();
                 const PartnerUserId = usersStabs.activePartnerUserExample.id; //1
 
-                const updatePartnerDto: UpdateBussinessPartnerWithoutPassword = {
+                const updatePartnerDto: UpdateBussinessPartnerWithoutPasswordAndActive = {
                     ...usersStabs.updatePartnerDto,
                     email: 'kjdjfd@gmail.com'
 
@@ -664,7 +664,7 @@ describe('user service', () => {
                 const savedPartnerId = usersStabs.activePartnerUserExample.id; //1
 
                 const emailofPartnerSavedinDatabase = usersStabs.activePartnerUserExample.email;
-                const updatedPartnerDto: UpdateBussinessPartnerWithoutPassword = {
+                const updatedPartnerDto: UpdateBussinessPartnerWithoutPasswordAndActive = {
                     ...usersStabs.updatePartnerDto,
                     email: emailofPartnerSavedinDatabase
 
@@ -684,7 +684,7 @@ describe('user service', () => {
                 const idOfUserWhichIsnotBusinessPartner = usersStabs.activeAdminUserExample.id;
 
 
-                const updatePartnerDto: UpdateBussinessPartnerWithoutPassword = {
+                const updatePartnerDto: UpdateBussinessPartnerWithoutPasswordAndActive = {
                     ...usersStabs.updatePartnerDto,
                     email: "newPartneremial@gmial.com"
 

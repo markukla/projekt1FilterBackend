@@ -9,9 +9,11 @@ import CreateBusinessPartnerDto from "../Models/Users/BusinessPartner/businessPa
 import authMiddleware from "../middleware/auth.middleware";
 import editorAuthorizationMiddleware from "../middleware/editorAuthorizationMiddleware";
 import User from "../Models/Users/user.entity";
-import UpdateBussinessPartnerWithoutPassword from "../Models/Users/BusinessPartner/modyfyBusinessPartent.dto";
+import UpdateBussinessPartnerWithoutPasswordAndActive from "../Models/Users/BusinessPartner/modyfyBusinessPartent.dto";
 import BusinessPartnerNotFoundException from "../Exceptions/BusinessPartnerNotFoundException";
 import UserService from "../RepositoryServices/userRepositoryService";
+import CHangePasswordByAdminDto from "../Models/Users/changePasswordByAdmin.dto";
+import BlockUserDto from "../Models/Users/blockUser.dto";
 
 
 
@@ -28,8 +30,8 @@ class BusinessPartnerController implements Controller{
         this.router.get(`${this.path}/:id`,authMiddleware,editorAuthorizationMiddleware, this.getOnePartnerById);
         this.router.patch(`${this.path}/:id`,authMiddleware,editorAuthorizationMiddleware, validationMiddleware(CreateBusinessPartnerDto, true), this.modyfyPartner);
         this.router.delete(`${this.path}/:id`,authMiddleware,editorAuthorizationMiddleware, this.deleteOnePartnerById);
-        this.router.patch(`${this.path}/:id/changepassword`,authMiddleware,editorAuthorizationMiddleware, validationMiddleware(ChangePasswordDto, true), this.changePasswordByEditor);
-
+        this.router.patch(`${this.path}/:id/changePassword`,authMiddleware,editorAuthorizationMiddleware, validationMiddleware(CHangePasswordByAdminDto, true), this.changePasswordByEditor);
+        this.router.patch(`${this.path}/:id/blockOrUnblock`,authMiddleware,editorAuthorizationMiddleware, validationMiddleware(CHangePasswordByAdminDto, true), this.blockOrUnblockUser)
         this.router.post(this.path,validationMiddleware(CreateBusinessPartnerDto), this.registration);
     }
 
@@ -46,7 +48,7 @@ class BusinessPartnerController implements Controller{
 
 
     private modyfyPartner = async (request: express.Request, response: express.Response, next: express.NextFunction)=>{
-        const partnerData:UpdateBussinessPartnerWithoutPassword=request.body;
+        const partnerData:UpdateBussinessPartnerWithoutPasswordAndActive=request.body;
         const id:number=Number(request.params.id);
         try {
             const modyfiedPartner = await this.service.updatePartnerById(id, partnerData);
@@ -120,7 +122,7 @@ class BusinessPartnerController implements Controller{
         try{
             const businesPartner=await this.service.findOnePartnerById(id);
             if(businesPartner){
-                const passwordData:ChangePasswordDto=request.body;
+                const passwordData:CHangePasswordByAdminDto=request.body;
               await this.service.changePartnerPasswordByEditor(businesPartner,passwordData);
                 response.send({status:200,
                     message:"password has been successfully updated"})
@@ -137,6 +139,28 @@ class BusinessPartnerController implements Controller{
 
 
     }
+    private blockOrUnblockUser = async (request: express.Request, response: express.Response, next: express.NextFunction)=>{
+
+        try{
+            const id:string=request.params.id;
+            const user=await this.service.findOnePartnerById(id);
+            if(user) {
+                const activeData: BlockUserDto = request.body;
+                const updatedUser = await this.service.blockOrUnblockUser(user, activeData);
+                response.send(updatedUser);
+            }
+            else {
+                next(new UserNotFoundException(String(id))) ;
+            }
+        }
+        catch (error) {
+            next(error);
+        }
+
+
+
+    }
+
 
 
 

@@ -14,6 +14,7 @@ import authMiddleware from "../middleware/auth.middleware";
 import LoggedUser from "./loggedUser";
 import {getManager} from "typeorm";
 import BlackListedToken from "../Models/BlackListedTokenEntity/blackListedToken.entity";
+import NotActiveException from "../Exceptions/NotActiveException";
 
 class AuthenticationController implements Controller {
   public path = '/auth';
@@ -37,12 +38,10 @@ class AuthenticationController implements Controller {
 
     const loggedUser:LoggedUser=await this.service.login(logInData);
 
-      if(loggedUser){
+      if(loggedUser&&loggedUser.user.active){
 //Set-Cookie'
         response.setHeader('Authorization', [this.service.createCookie(loggedUser.tokenData)]);
         response.send(loggedUser);
-      } else {
-        next(new WrongCredentialsException());
       }
 
     }

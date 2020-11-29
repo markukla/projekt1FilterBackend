@@ -14,12 +14,14 @@ import validatePassword from "../utils/validatePassword/validate.password";
 import UserNotFoundException from "../Exceptions/UserNotFoundException";
 import CreateBusinessPartnerDto from "../Models/Users/BusinessPartner/businessPartner.dto";
 import BusinessPartnerNotFoundException from "../Exceptions/BusinessPartnerNotFoundException";
-import UpdateBussinessPartnerWithoutPassword from "../Models/Users/BusinessPartner/modyfyBusinessPartent.dto";
+import UpdateBussinessPartnerWithoutPasswordAndActive from "../Models/Users/BusinessPartner/modyfyBusinessPartent.dto";
 import UserWithThisEmailDoesNotExistException from "../Exceptions/UserWithThisEmailDoesNotExistException";
 import WeekPasswordException from "../Exceptions/ToWeekPasswordException";
 import PasswordValidationResult from "../utils/validatePassword/passwordValidationResult";
 import PrivilligedUserNotFoundException from "../Exceptions/PrivilligedUserNotFoundException";
 import ProductNotFoundExceptionn from "../Exceptions/ProductNotFoundException";
+import CHangePasswordByAdminDto from "../Models/Users/changePasswordByAdmin.dto";
+import BlockUserDto from "../Models/Users/blockUser.dto";
 
 class UserService implements RepositoryService {
 
@@ -220,7 +222,7 @@ class UserService implements RepositoryService {
 
 
     }
-    public changePrivilegedUserPasswordByAdmin = async (user: User, passwordData: ChangePasswordDto): Promise<User> => {
+    public changePrivilegedUserPasswordByAdmin = async (user: User, passwordData: CHangePasswordByAdminDto): Promise<User> => {
         const foundPrivilligedUser = await this.findOnePrivilegedUserById(String(user.id));
         if (foundPrivilligedUser) {
 
@@ -306,7 +308,7 @@ class UserService implements RepositoryService {
 
     }
 
-    public updatePartnerById = async (id: number, businesesPartnerData: UpdateBussinessPartnerWithoutPassword): Promise<User> => {
+    public updatePartnerById = async (id: number, businesesPartnerData: UpdateBussinessPartnerWithoutPasswordAndActive): Promise<User> => {
         let partnerToupdate: User = await this.findOnePartnerById(String(id));
         if (!partnerToupdate) {
             throw new BusinessPartnerNotFoundException(String(id));
@@ -351,7 +353,7 @@ class UserService implements RepositoryService {
         return deleteResponse;
 
     }
-    public changePartnerPasswordByEditor = async (businessPartner: User, passwordData: ChangePasswordDto): Promise<User> => {
+    public changePartnerPasswordByEditor = async (businessPartner: User, passwordData: CHangePasswordByAdminDto): Promise<User> => {
         const foundPartnerdUser = await this.findOnePartnerById(String(businessPartner.id));
         if (foundPartnerdUser) {
 
@@ -377,6 +379,22 @@ class UserService implements RepositoryService {
 
 
     }
+
+    public blockOrUnblockUser = async (user: User, activeStatusData: BlockUserDto): Promise<User> => {
+        const foundUser = await this.findUserById(String(user.id));
+        if (foundUser) {
+const active: boolean = activeStatusData.active;
+
+                const userWithChangedActiveStatus = this.manager.create(User, {
+                    ...user,
+                    active: active
+
+                });
+                const updatedUser = await this.manager.save(User, userWithChangedActiveStatus);
+                return updatedUser;
+            }
+            }
+
 
 
     public UserHasPartnerRole = (user: User): boolean => {

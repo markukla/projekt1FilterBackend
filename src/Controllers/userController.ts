@@ -14,6 +14,8 @@ import UserService from "../RepositoryServices/userRepositoryService";
 import UserNotFoundException from "../Exceptions/UserNotFoundException";
 import ChangePasswordDto from "../authentication/changePassword.dto";
 import UpdatePrivilegedUserWithouTPasswordDto from "../Models/Users/PrivilegedUsers/modyfyUser.dto";
+import CHangePasswordByAdminDto from "../Models/Users/changePasswordByAdmin.dto";
+import BlockUserDto from "../Models/Users/blockUser.dto";
 
 
 
@@ -29,7 +31,8 @@ class UserController implements Controller{
         this.router.get(this.path, authMiddleware,adminAuthorizationMiddleware,this.getAllUsers);
         this.router.get(`${this.path}/:id`,authMiddleware,adminAuthorizationMiddleware, this.getOneUserById);
         this.router.patch(`${this.path}/:id`,authMiddleware,adminAuthorizationMiddleware, validationMiddleware(CreatePrivilegedUserDto, true), this.updateUserById);
-        this.router.patch(`${this.path}/:id/changePassword`,authMiddleware,adminAuthorizationMiddleware, validationMiddleware(ChangePasswordDto, true), this.changePasswordByAdmin);
+        this.router.patch(`${this.path}/:id/changePassword`,authMiddleware,adminAuthorizationMiddleware, validationMiddleware(CHangePasswordByAdminDto, true), this.changePasswordByAdmin);
+        this.router.patch(`${this.path}/:id/blockOrUnblock`,authMiddleware,adminAuthorizationMiddleware, validationMiddleware(BlockUserDto, true), this.blockOrUnblockUser)
         this.router.delete(`${this.path}/:id`,authMiddleware,adminAuthorizationMiddleware, this.deleteOneUserById);
         this.router.post(this.path,validationMiddleware(CreatePrivilegedUserDto), this.registerOneUser);
      this.router.get(`${this.path}/admins`,authMiddleware,adminAuthorizationMiddleware, this.getAllAdmins);
@@ -204,12 +207,10 @@ const id:string=request.params.id;
         try{
             const id:string=request.params.id;
             const user=await this.service.findOnePrivilegedUserById(id);
-            if(user){
-                const passwordData:ChangePasswordDto=request.body;
-               await this.service.changePrivilegedUserPasswordByAdmin(user,passwordData);
-                response.send({status:200,
-                message:"password has been successfully updated"});
-
+            if(user) {
+                const passwordData: CHangePasswordByAdminDto = request.body;
+                const userWithChangedPassword = await this.service.changePrivilegedUserPasswordByAdmin(user, passwordData);
+                response.send(userWithChangedPassword);
             }
             else {
                 next(new UserNotFoundException(String(id))) ;
@@ -223,6 +224,27 @@ const id:string=request.params.id;
 
     }
 
+    private blockOrUnblockUser = async (request: express.Request, response: express.Response, next: express.NextFunction)=>{
+
+        try{
+            const id:string=request.params.id;
+            const user=await this.service.findOnePrivilegedUserById(id);
+            if(user) {
+                const activeData: BlockUserDto = request.body;
+                const updatedUser = await this.service.blockOrUnblockUser(user, activeData);
+                response.send(updatedUser);
+            }
+            else {
+                next(new UserNotFoundException(String(id))) ;
+            }
+        }
+        catch (error) {
+            next(error);
+        }
+
+
+
+    }
 
 
 }
