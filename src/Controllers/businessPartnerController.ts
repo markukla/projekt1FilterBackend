@@ -14,6 +14,7 @@ import BusinessPartnerNotFoundException from "../Exceptions/BusinessPartnerNotFo
 import UserService from "../RepositoryServices/userRepositoryService";
 import CHangePasswordByAdminDto from "../Models/Users/changePasswordByAdmin.dto";
 import BlockUserDto from "../Models/Users/blockUser.dto";
+import {models} from "mongoose";
 
 
 
@@ -33,6 +34,8 @@ class BusinessPartnerController implements Controller{
         this.router.patch(`${this.path}/:id/changePassword`,authMiddleware,editorAuthorizationMiddleware, validationMiddleware(CHangePasswordByAdminDto, true), this.changePasswordByEditor);
         this.router.patch(`${this.path}/:id/blockOrUnblock`,authMiddleware,editorAuthorizationMiddleware, validationMiddleware(CHangePasswordByAdminDto, true), this.blockOrUnblockUser)
         this.router.post(this.path,validationMiddleware(CreateBusinessPartnerDto), this.registration);
+        this.router.get(`${this.path}/emails/:email`,authMiddleware,editorAuthorizationMiddleware, this.isEmailTaken)
+        this.router.get(`${this.path}/:id/emails/:email`,authMiddleware,editorAuthorizationMiddleware, this.isEmailTakenByOtherUser)
     }
 
     private registration = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
@@ -41,6 +44,37 @@ class BusinessPartnerController implements Controller{
             const user = await this.service.registerBusinessPartner(businessPartnerData);
 
             response.send(user);
+        } catch (error) {
+            next(error);
+        }
+    }
+    private isEmailTaken = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
+        const email:string = request.params.email;
+        try {
+            const user = await this.service.findUserByEmail(email);
+            if(user){
+                response.send(true);
+            }
+            if(!user){
+                response.send(false);
+            }
+
+        } catch (error) {
+            next(error);
+        }
+    }
+    private isEmailTakenByOtherUser = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
+        const email:string = request.params.email;
+        const id= Number(request.params.id);
+        try {
+            const user = await this.service.findUserByEmail(email);
+            if(user&&user.id!==id){
+                response.send(true);
+            }
+            else{
+                response.send(false);
+            }
+
         } catch (error) {
             next(error);
         }

@@ -16,6 +16,7 @@ import ChangePasswordDto from "../authentication/changePassword.dto";
 import UpdatePrivilegedUserWithouTPasswordDto from "../Models/Users/PrivilegedUsers/modyfyUser.dto";
 import CHangePasswordByAdminDto from "../Models/Users/changePasswordByAdmin.dto";
 import BlockUserDto from "../Models/Users/blockUser.dto";
+import editorAuthorizationMiddleware from "../middleware/editorAuthorizationMiddleware";
 
 
 
@@ -38,6 +39,7 @@ class UserController implements Controller{
      this.router.get(`${this.path}/admins`,authMiddleware,adminAuthorizationMiddleware, this.getAllAdmins);
         this.router.get(`${this.path}/editors`,authMiddleware,adminAuthorizationMiddleware, this.getAllEditors);
         this.router.get(`${this.path}/emails/:email`,authMiddleware,adminAuthorizationMiddleware, this.isEmailTaken)
+        this.router.get(`${this.path}/:id/emails/:email`,authMiddleware,editorAuthorizationMiddleware, this.isEmailTakenByOtherUser)
     }
 
     private registerOneUser = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
@@ -66,9 +68,26 @@ class UserController implements Controller{
             next(error);
         }
     }
+    private isEmailTakenByOtherUser = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
+        const email:string = request.params.email;
+        const id= Number(request.params.id);
+        try {
+            const user = await this.service.findUserByEmail(email);
+            if(user&&user.id!==id){
+                response.send(true);
+            }
+            else{
+                response.send(false);
+            }
+
+        } catch (error) {
+            next(error);
+        }
+    }
 
 
-private updateUserById = async (request: express.Request, response: express.Response, next: express.NextFunction)=>{
+
+    private updateUserById = async (request: express.Request, response: express.Response, next: express.NextFunction)=>{
         const userData:UpdatePrivilegedUserWithouTPasswordDto=request.body;
         const id:number=Number(request.params.id);
         try {
