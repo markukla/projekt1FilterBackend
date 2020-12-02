@@ -8,15 +8,15 @@ class ProductTop {
     @PrimaryGeneratedColumn()
     public id?: number;
     @Column({unique:true})
-    productTopType:string;
+    name:string;
 
     @Column({unique:true})
-    productTopCode:string;
+    code:string;
 
     @OneToMany(()=>Product,(productWithThisTop:Product)=>productWithThisTop.productTop)
-    productsWithThisTopType?:Product[]
-    @ManyToMany(()=>ProductType,(productType:ProductType)=>productType.productTopsAvailableToThisProductType)
-    productTypesWhichHaveThisProductTop?:ProductType[]
+    productsWithThisTop?:Product[]
+    @ManyToMany(()=>ProductType,(productType:ProductType)=>productType.topsForThisProductType)
+    productTypeswithThisTop?:ProductType[]
 
 }
 

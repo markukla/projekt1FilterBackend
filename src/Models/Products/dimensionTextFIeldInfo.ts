@@ -2,14 +2,14 @@
 
 class DimensionTextFIeldInfo{
     dimensionId:string;
-    dimensionTexfield_x_position:string;
-    dimensionTexfield_y_position:string;
+    dimensionTexfieldXposition:string;
+    dimensionTexfieldYposition:string;
 
 
-    constructor(dimensionId: string, dimensionTexfield_x_position: string, dimensionTexfield_y_position: string) {
+    constructor(dimensionId: string, dimensionTexfieldXposition: string, dimensionTexfieldYposition: string) {
         this.dimensionId = dimensionId;
-        this.dimensionTexfield_x_position = dimensionTexfield_x_position;
-        this.dimensionTexfield_y_position = dimensionTexfield_y_position;
+        this.dimensionTexfieldXposition = dimensionTexfieldXposition;
+        this.dimensionTexfieldYposition = dimensionTexfieldYposition;
     }
 }
 export default DimensionTextFIeldInfo;

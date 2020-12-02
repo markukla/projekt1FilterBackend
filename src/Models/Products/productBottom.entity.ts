@@ -8,14 +8,14 @@ class ProductBottom {
     @PrimaryGeneratedColumn()
     public id?: number;
     @Column({unique:true})
-    productBottomType:string;
+    name:string;
 
     @Column({unique:true})
-    productBottomCode:string;
+    code:string;
     @OneToMany(()=>Product,(productWithThisBottom:Product)=>productWithThisBottom.productBottom)
-    productsWithThisBottomType?:Product[];
-    @ManyToMany(()=>ProductType,(productType:ProductType)=>productType.productBottomsAvailableToThisProductType)
-    productTypesWhichHaveThisProductBottom?:ProductType[]
+    productsWithThisBottom?:Product[];
+    @ManyToMany(()=>ProductType,(productType:ProductType)=>productType.bottomsForThisProductType)
+    productTypesWithThisBottom?:ProductType[]
 
 
 

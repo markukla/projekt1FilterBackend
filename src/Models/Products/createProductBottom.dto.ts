@@ -7,9 +7,9 @@ class CreateProductBottomDto{
 
 
     @IsString()
-    productBottomType:string;
+    name:string;
     @IsString()
-    productBottomCode:string;
+    code:string;
 
 
 

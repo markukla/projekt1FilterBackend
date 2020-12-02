@@ -26,7 +26,7 @@ class ProductTypeService implements RepositoryService {
 
     public async findOneProductTypeByProductTypeCode(createProductTypeDto: CreateProductTypeDto): Promise<ProductType> {
         const foundProduct: ProductType = await this.repository.findOne({
-            productTypeCode: createProductTypeDto.productTypeCode
+            code: createProductTypeDto.productTypeCode
         },{relations:["productTopsAvailableToThisProductType","productBottomsAvailableToThisProductType"]});
 
         return foundProduct;
@@ -35,7 +35,7 @@ class ProductTypeService implements RepositoryService {
     }
 
     public async findOneProductTypeByProductTypeName(createProductTypeDto: CreateProductTypeDto): Promise<ProductType> {
-        const foundProduct: ProductType = await this.repository.findOne({productTypeName: createProductTypeDto.productTypeName},{relations:["productTopsAvailableToThisProductType","productBottomsAvailableToThisProductType"]});
+        const foundProduct: ProductType = await this.repository.findOne({name: createProductTypeDto.productTypeName},{relations:["productTopsAvailableToThisProductType","productBottomsAvailableToThisProductType"]});
 
         return foundProduct;
 

@@ -38,8 +38,8 @@ class MaterialController implements Controller{
         this.router.patch(`${this.path}/:id`,authMiddleware,adminAuthorizationMiddleware, validationMiddleware(CreateMaterialDto, true), this.updateMaterialById);
         this.router.delete(`${this.path}/:id`,authMiddleware,adminAuthorizationMiddleware, this.deleteOneMaterialById);
         this.router.post(this.path, authMiddleware,adminAuthorizationMiddleware, validationMiddleware(CreateMaterialDto), this.addOneMaterial);
-        this.router.get(`${this.path}/materialCode/:code`,authMiddleware,adminAuthorizationMiddleware, this.materialWithThisCodeExist);
-        this.router.get(`${this.path}/materialName/:name`,authMiddleware,adminAuthorizationMiddleware, this.materialWithThisNameExist);
+        this.router.get(`${this.path}/codes/:code`,authMiddleware,adminAuthorizationMiddleware, this.materialWithThisCodeExist);
+        this.router.get(`${this.path}/names/:name`,authMiddleware,adminAuthorizationMiddleware, this.materialWithThisNameExist);
     }
 //findOneMaterialByCode
     private addOneMaterial = async (request: express.Request, response: express.Response, next: express.NextFunction) => {

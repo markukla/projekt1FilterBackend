@@ -9,21 +9,21 @@ class ProductType {
     @PrimaryGeneratedColumn()
     public id?: number;
     @Column()
-    productTypeName:string;
+    name:string;
 
     @Column()
-    productTypeCode:string;
+    code:string;
 
     @OneToMany(()=>Product,(product:Product)=>product.productType)
     productsWithThisType?:Product[];
 
     @ManyToMany(()=>ProductTop,)
     @JoinTable({name:"productType_productTop_id_pairs"})
-    productTopsAvailableToThisProductType:ProductTop[];
+    topsForThisProductType:ProductTop[];
 
     @ManyToMany(()=>ProductBottom, )
     @JoinTable({name:"productType_productBottom_id_pairs"})
-    productBottomsAvailableToThisProductType:ProductBottom[];
+    bottomsForThisProductType:ProductBottom[];
 
 
 

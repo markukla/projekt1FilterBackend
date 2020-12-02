@@ -15,10 +15,10 @@ class Product{  // this class represents type of product and technical drawing o
    @ManyToOne(()=>ProductType,(productType:ProductType)=>productType.productsWithThisType, {eager:true}) //eager cause strange error table name (long alias name) is spacyfied more than once
    productType:ProductType;
 
-    @ManyToOne(()=>ProductBottom,(productBottom:ProductBottom)=>productBottom.productsWithThisBottomType,{eager:true})
+    @ManyToOne(()=>ProductBottom,(productBottom:ProductBottom)=>productBottom.productsWithThisBottom,{eager:true})
     productBottom:ProductBottom;
 
-    @ManyToOne(()=>ProductBottom,(productBottom:ProductBottom)=>productBottom.productsWithThisBottomType,{eager:true})
+    @ManyToOne(()=>ProductBottom,(productBottom:ProductBottom)=>productBottom.productsWithThisBottom,{eager:true})
     productTop:ProductTop;
 
     @Column()

@@ -7,9 +7,9 @@ class CreateProductTopDto{
 
 
     @IsString()
-    productTopType:string;
+    name:string;
     @IsString()
-    productTopCode:string;
+    code:string;
 
 
 

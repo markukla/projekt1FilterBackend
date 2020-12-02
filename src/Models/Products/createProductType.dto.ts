@@ -9,13 +9,13 @@ class CreateProductTypeDto{
 
 
     @IsString()
-    productTypeName:string;
+    name:string;
     @IsString()
-    productTypeCode:string;
+    code:string;
     @IsArray()
-    productTopsAvailableToThisProductType:ProductTop[];  // insteed of using whole objects we nan use id of each product type eg [{"id"=1},{"id=2"}]
+    topsForThisProductType:ProductTop[];  // insteed of using whole objects we nan use id of each product type eg [{"id"=1},{"id=2"}]
     @IsArray()
-    productBottomsAvailableToThisProductType:ProductBottom[];
+    bottomsForThisProductType:ProductBottom[];
 
 
 
