@@ -8,6 +8,7 @@ import ProductBottomNotFoundException from "../Exceptions/ProductBottomNotFoundE
 import CreateProductBottomDto from "../Models/Products/createProductBottom.dto";
 import ProductBottomAlreadyExistsException from "../Exceptions/ProductBottomAlreadyExistsException";
 import {DeleteResult, getRepository, UpdateResult} from "typeorm";
+import ProductTop from "../Models/Products/productTop.entity";
 
 
 class ProductBottomService implements RepositoryService {
@@ -26,7 +27,7 @@ class ProductBottomService implements RepositoryService {
 
     public async findOneProductBottomByBottomCode(createProductBottomDto: CreateProductBottomDto): Promise<ProductBottom> {
         const productBottom: ProductBottom = await this.repository.findOne({
-            productBottomCode:createProductBottomDto.productBottomCode
+            code:createProductBottomDto.code
         });
 
         return productBottom;
@@ -35,12 +36,27 @@ class ProductBottomService implements RepositoryService {
     }
     public async findOneProductBottomByBottomType(createProductBottomDto: CreateProductBottomDto): Promise<ProductBottom> {
         const productBottom: ProductBottom = await this.repository.findOne({
-            productBottomType:createProductBottomDto.productBottomType
+            name:createProductBottomDto.name
         });
 
         return productBottom;
 
 
+    }
+
+    public async findOneProductBottomByName(name: string): Promise<ProductTop> {
+        const productBottom: ProductBottom = await this.repository.findOne({
+            name:name
+        });
+
+        return productBottom;
+    }
+    public async findOneProductBottomByCode(code: string): Promise<ProductTop> {
+        const productBottom: ProductBottom = await this.repository.findOne({
+            code:code
+        });
+
+        return productBottom;
     }
 
 

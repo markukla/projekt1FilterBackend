@@ -8,6 +8,7 @@ import ProductType from "../Models/Products/productType.entity";
 import ProductTypeNotFoundException from "../Exceptions/ProductTypeNotFoundException";
 import CreateProductTypeDto from "../Models/Products/createProductType.dto";
 import ProductTypeAlreadyExistsException from "../Exceptions/ProductTypeAlreadyExistException";
+import ProductTop from "../Models/Products/productTop.entity";
 
 
 class ProductTypeService implements RepositoryService {
@@ -26,7 +27,7 @@ class ProductTypeService implements RepositoryService {
 
     public async findOneProductTypeByProductTypeCode(createProductTypeDto: CreateProductTypeDto): Promise<ProductType> {
         const foundProduct: ProductType = await this.repository.findOne({
-            code: createProductTypeDto.productTypeCode
+            code: createProductTypeDto.code
         },{relations:["productTopsAvailableToThisProductType","productBottomsAvailableToThisProductType"]});
 
         return foundProduct;
@@ -35,11 +36,25 @@ class ProductTypeService implements RepositoryService {
     }
 
     public async findOneProductTypeByProductTypeName(createProductTypeDto: CreateProductTypeDto): Promise<ProductType> {
-        const foundProduct: ProductType = await this.repository.findOne({name: createProductTypeDto.productTypeName},{relations:["productTopsAvailableToThisProductType","productBottomsAvailableToThisProductType"]});
+        const foundProduct: ProductType = await this.repository.findOne({name: createProductTypeDto.name},{relations:["productTopsAvailableToThisProductType","productBottomsAvailableToThisProductType"]});
 
         return foundProduct;
 
 
+    }
+    public async fndOneProductTypeByName(name: string): Promise<ProductTop> {
+        const productType: ProductType = await this.repository.findOne({
+            name:name
+        });
+
+        return productType;
+    }
+    public async findOneProductTypeByCode(code: string): Promise<ProductTop> {
+        const productType: ProductType = await this.repository.findOne({
+            code:code
+        });
+
+        return productType;
     }
 
 

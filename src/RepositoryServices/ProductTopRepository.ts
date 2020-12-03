@@ -32,7 +32,7 @@ class ProductTopService implements RepositoryService {
 
     public async findOneProductTopByTopCode(createProductTopDto: CreateProductTopDto): Promise<ProductTop> {
         const productTop: ProductTop = await this.repository.findOne({
-            productTopCode:createProductTopDto.productTopCode
+    code:createProductTopDto.code
         });
 
         return productTop;
@@ -41,12 +41,26 @@ class ProductTopService implements RepositoryService {
     }
     public async findOneProductTopByTopType(createProductTopDto: CreateProductTopDto): Promise<ProductTop> {
         const productTop: ProductTop = await this.repository.findOne({
-            productTopType:createProductTopDto.productTopType
+            name:createProductTopDto.name
         });
 
         return productTop;
 
 
+    }
+    public async findOneProductTopByName(name: string): Promise<ProductTop> {
+        const productTop: ProductTop = await this.repository.findOne({
+            name:name
+        });
+
+        return productTop;
+    }
+    public async findOneProductTopByCode(code: string): Promise<ProductTop> {
+        const productTop: ProductTop = await this.repository.findOne({
+            code:code
+        });
+
+        return productTop;
     }
 
 

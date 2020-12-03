@@ -30,7 +30,90 @@ class ProductBottomController implements Controller {
         this.router.patch(`${this.path}/:id`, validationMiddleware(CreateProductBottomDto, true), this.updateProductTypeById);
         this.router.delete(`${this.path}/:id`, this.deleteOneProductBottomById);
         this.router.post(this.path, validationMiddleware(CreateProductBottomDto), this.addOneProductBottom);
+        this.router.get(`${this.path}/names/:name`, this.isNameTaken);
+        this.router.get(`${this.path}/:id/names/:name`, this.isNameTakenForUpdate);
+        this.router.get(`${this.path}/codes/:code`, this.isCodeTaken);
+        this.router.get(`${this.path}/:id/codes/:code`, this.isCodeTakenForUpdate);
     }
+
+    private isNameTaken = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
+        const id: string = request.params.id;
+        const name: string= request.params.name;
+        try {
+            const foundProductTop = await this.service.findOneProductBottomByName(name);
+            if(foundProductTop) {
+                response.send(true);
+            }
+            else {
+                response.send(false);
+            }
+
+
+
+        } catch (error) {
+            next(error);
+        }
+
+
+    }
+    private isCodeTaken = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
+        const id: string = request.params.id;
+        const code: string= request.params.code;
+        try {
+            const foundProductTop = await this.service.findOneProductBottomByCode(code);
+            if(foundProductTop) {
+                response.send(true);
+            }
+            else {
+                response.send(false);
+            }
+
+
+
+        } catch (error) {
+            next(error);
+        }
+
+
+    }
+
+    private isNameTakenForUpdate = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
+        const id: string = request.params.id;
+        const name: string= request.params.name;
+        try {
+            const foundProductTop = await this.service.findOneProductBottomByName(name);
+            if(foundProductTop&&foundProductTop.id!==Number(id)) {
+                response.send(true);
+            }
+            else {
+                response.send(false);
+            }
+
+
+
+        } catch (error) {
+            next(error);
+        }
+
+
+    }
+    private isCodeTakenForUpdate = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
+        const id: string = request.params.id;
+        const code: string= request.params.code;
+        try {
+            const foundProductTop = await this.service.findOneProductBottomByCode(code);
+            if(foundProductTop&&foundProductTop.id!==Number(id)) {
+                response.send(true);
+            }
+            else {
+                response.send(false);
+            }
+
+        } catch (error) {
+            next(error);
+        }
+    }
+
 
     private addOneProductBottom = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
         const productBottomData: CreateProductBottomDto = request.body;
