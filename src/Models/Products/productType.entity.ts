@@ -14,14 +14,14 @@ class ProductType {
     @Column()
     code:string;
 
-    @OneToMany(()=>Product,(product:Product)=>product.productType)
+    @OneToMany(()=>Product,(productsWithThisType:Product)=>productsWithThisType.productType)
     productsWithThisType?:Product[];
 
-    @ManyToMany(()=>ProductTop,)
+    @ManyToMany(()=>ProductTop, (topsForThisProductType: ProductTop)=> topsForThisProductType.productTypeswithThisTop)
     @JoinTable({name:"productType_productTop_id_pairs"})
     topsForThisProductType:ProductTop[];
 
-    @ManyToMany(()=>ProductBottom, )
+    @ManyToMany(()=>ProductBottom, (bottomsForThisProductType:ProductBottom) => bottomsForThisProductType.productTypesWithThisBottom )
     @JoinTable({name:"productType_productBottom_id_pairs"})
     bottomsForThisProductType:ProductBottom[];
 

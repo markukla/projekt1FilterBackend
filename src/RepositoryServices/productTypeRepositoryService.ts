@@ -16,7 +16,7 @@ class ProductTypeService implements RepositoryService {
     public repository = getRepository(ProductType);
 
     public async findOneProductTypeById(id: string): Promise<ProductType> {
-        const foundProductType: ProductType = await this.repository.findOne(id,{relations:["productTopsAvailableToThisProductType","productBottomsAvailableToThisProductType"]}); // table name not entity name
+        const foundProductType: ProductType = await this.repository.findOne(id,{relations:["topsForThisProductType","bottomsForThisProductType"]}); // table name not entity name
         if (!foundProductType) {
             throw new ProductTypeNotFoundException(id);
         }
@@ -28,7 +28,7 @@ class ProductTypeService implements RepositoryService {
     public async findOneProductTypeByProductTypeCode(createProductTypeDto: CreateProductTypeDto): Promise<ProductType> {
         const foundProduct: ProductType = await this.repository.findOne({
             code: createProductTypeDto.code
-        },{relations:["productTopsAvailableToThisProductType","productBottomsAvailableToThisProductType"]});
+        },{relations:["topsForThisProductType","bottomsForThisProductType"]});
 
         return foundProduct;
 
@@ -36,7 +36,7 @@ class ProductTypeService implements RepositoryService {
     }
 
     public async findOneProductTypeByProductTypeName(createProductTypeDto: CreateProductTypeDto): Promise<ProductType> {
-        const foundProduct: ProductType = await this.repository.findOne({name: createProductTypeDto.name},{relations:["productTopsAvailableToThisProductType","productBottomsAvailableToThisProductType"]});
+        const foundProduct: ProductType = await this.repository.findOne({name: createProductTypeDto.name},{relations:["topsForThisProductType","bottomsForThisProductType"]});
 
         return foundProduct;
 
@@ -59,7 +59,7 @@ class ProductTypeService implements RepositoryService {
 
 
     public async findAllProductsTypes(): Promise<ProductType[]> {
-        const foundProductTypes: ProductType[] = await this.repository.find({relations:["productTopsAvailableToThisProductType","productBottomsAvailableToThisProductType"]});
+        const foundProductTypes: ProductType[] = await this.repository.find({relations:["topsForThisProductType","bottomsForThisProductType"]});
 
         return foundProductTypes;
 

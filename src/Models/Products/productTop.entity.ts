@@ -13,9 +13,9 @@ class ProductTop {
     @Column({unique:true})
     code:string;
 
-    @OneToMany(()=>Product,(productWithThisTop:Product)=>productWithThisTop.productTop)
+    @OneToMany(()=>Product,(productsWithThisTop :Product)=>productsWithThisTop.productTop)
     productsWithThisTop?:Product[]
-    @ManyToMany(()=>ProductType,(productType:ProductType)=>productType.topsForThisProductType)
+    @ManyToMany(()=>ProductType,(productTypeswithThisTop:ProductType)=>productTypeswithThisTop.topsForThisProductType)
     productTypeswithThisTop?:ProductType[]
 
 }
