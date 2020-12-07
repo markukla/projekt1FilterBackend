@@ -76,7 +76,7 @@ class ProductTypeController implements Controller {
         const name: string= request.params.name;
         try {
             const foundProductTop = await this.service.fndOneProductTypeByName(name);
-            if(foundProductTop&&foundProductTop.id===Number(id)) {
+            if(foundProductTop&&foundProductTop.id!==Number(id)) {
                 response.send(true);
             }
             else {
@@ -96,7 +96,7 @@ class ProductTypeController implements Controller {
         const code: string= request.params.code;
         try {
             const foundProductTop = await this.service.findOneProductTypeByCode(code);
-            if(foundProductTop&&foundProductTop.id===Number(id)) {
+            if(foundProductTop&&foundProductTop.id!==Number(id)) {
                 response.send(true);
             }
             else {

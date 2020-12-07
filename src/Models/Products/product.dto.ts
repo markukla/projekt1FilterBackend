@@ -24,6 +24,11 @@ class CreateProductDto{
     @IsArray()
     dimensionsTextFieldInfo:DimensionTextFIeldInfo[];
 
+    @IsString()
+    urlOfOrginalDrawing:string;
+
+    @IsString()
+    urlOfThumbnailDrawing:string;
 
 
 }

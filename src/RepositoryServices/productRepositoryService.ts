@@ -49,7 +49,7 @@ class ProductService implements RepositoryService {
 
     }
 
-    public async addOneProduct(createProductDto: CreateProductDto,orginalDrawingUrl:string): Promise<Product> {
+    public async addOneProduct(createProductDto: CreateProductDto): Promise<Product> {
         // do not allow to add the same product twice
         const productInDaTabase: Product = await this.findOneProductByProductTypeProductTopTypeProductBottomTypeAndAppropriateCodes(createProductDto);
         if (productInDaTabase) {
@@ -62,17 +62,13 @@ class ProductService implements RepositoryService {
 
         const productTosave: Product = {
             ...createProductDto,
-            urlOfOrginalDrawing:orginalDrawingUrl,
-            urlOfThumbnailDrawing:minimalizeDrawingUrl,
-
-
         };
         const savedProduct:Product = await this.repository.save(productTosave);
         return savedProduct;
 
     }
 
-    public async updateProductById(id: string, createProductDto: CreateProductDto,drawingPath:string): Promise<Product> {
+    public async updateProductById(id: string, createProductDto: CreateProductDto): Promise<Product> {
         const idOfExistingProduct: boolean = await this.findOneProductById(id) !== null;
         if (idOfExistingProduct) {
 
@@ -83,10 +79,6 @@ class ProductService implements RepositoryService {
             }
         const productDataToUpdate:Product={
             ...createProductDto,
-            urlOfOrginalDrawing:drawingPath,
-            urlOfThumbnailDrawing:'',  // nedd to be fixed for now it is empty string
-
-
         }
             const updateResult: UpdateResult = await this.repository.update(id, productDataToUpdate);
             if (updateResult.affected === 1) {
