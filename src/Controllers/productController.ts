@@ -19,6 +19,7 @@ import ProductNotFoundExceptionn from "../Exceptions/ProductNotFoundException";
 import * as multer from "multer";
 import * as fs from "fs";
 import {DrawingPaths} from "../Models/Products/drawingPaths";
+import NoPngFileException from "../Exceptions/noPngFile";
 const path = require('path');
 
 
@@ -53,11 +54,18 @@ class ProductController implements Controller{
         this.router.post(`${this.path}/:id`, this.updateProductById);//remeber to add authentication admin authorization middleware after tests
         this.router.delete(`${this.path}/:id`,authMiddleware,adminAuthorizationMiddleware, this.deleteOneProductById);
         this.router.post(this.path, this.addOneProduct);//remeber to add authentication admin authorization middleware after tests
-        this.router.post(`${this.path}/uploadDrawing`, this.upload.single("file"), this.uploadedDrawingToserwerCreaTeMiniatureAndReturnPaths);
-
+        this.router.post(`/uploadDrawing`, this.upload.single("file"), this.uploadedDrawingToserwerCreaTeMiniatureAndReturnPaths);
+        this.router.get(`/upload`, this.showUploadForm);
 
 
     }
+
+    private showUploadForm= async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+
+        res.render('../views/addProduct.ejs')
+
+    }
+
 
     private addOneProduct = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
         const productData=req.body;
@@ -154,20 +162,18 @@ class ProductController implements Controller{
 
     private uploadedDrawingToserwerCreaTeMiniatureAndReturnPaths= (req: express.Request, res: express.Response, next: express.NextFunction) => {
         // actually file is already uploaded by multer middleware we just check it path extension is correct and if not remove file by fs.unlink
-try{
-
 
         if(!req.file){
             res.send({
                    status:403,
-                    message:"cannot add product, because no drawign choosen"
+                    message:"no drawign choosen"
 
 
             });
 
         }
         const tempPath :string= req.file.path;
-        console.log(tempPath);
+        console.log(`tempPath= ${tempPath}`);
 
 
         const fileName:string=req.file.originalname;
@@ -186,22 +192,17 @@ try{
         if (path.extname(req.file.originalname).toLowerCase() === ".png") {
             fs.rename(tempPath, orginalDrawingPath, err => {
                 if (err) {
-                    return this.handleError(err, res);
+                    //return this.handleError(err, res);
                 }
-
-
-
 
             });
         } else {
+            console.log("else before unlink execution");
             fs.unlink(tempPath, err => {
-                if (err) return this.handleError(err, res);
+                //if (err) return this.handleError(err, res);
 
-                res
-                    .status(403)
-                    .contentType("text/plain")
-                    .end("Only .png files are allowed!");
             });
+           throw new NoPngFileException();
         }
         let miniaturePath =''; // need to be implemented
         const drawingPaths: DrawingPaths = {
@@ -210,16 +211,11 @@ try{
         };
 
         res.send(drawingPaths);
-}
-catch (e) {
-    next(e);
 
 }
 
-    }
 
     }
-
 
 
 
