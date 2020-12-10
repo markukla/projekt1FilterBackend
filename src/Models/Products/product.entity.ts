@@ -18,7 +18,7 @@ class Product{  // this class represents type of product and technical drawing o
     @ManyToOne(()=>ProductBottom,(productBottom:ProductBottom)=>productBottom.productsWithThisBottom,{eager:true})
     productBottom:ProductBottom;
 
-    @ManyToOne(()=>ProductBottom,(productBottom:ProductBottom)=>productBottom.productsWithThisBottom,{eager:true})
+    @ManyToOne(()=>ProductTop,(productTop:ProductTop)=>productTop.productsWithThisTop,{eager:true})
     productTop:ProductTop;
 
     @Column()
