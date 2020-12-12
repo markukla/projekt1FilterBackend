@@ -6,9 +6,6 @@ import Product from "../Products/product.entity";
 import Material from "../Materials/material.entity";
 
 class CreateOrderDto{
-
-
-
     @IsObject()
     businessPartner:User;  // when is object is used it can be object with all properties set, but also object with only id set, because only id is save as foreign key in database
     @IsObject()

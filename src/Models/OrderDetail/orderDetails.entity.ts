@@ -13,7 +13,7 @@ class OrderDetails {
     @Column()
     workingTemperature:number;
     @Column()
-    anti_electrostatic:boolean;
+    antiEelectrostatic:boolean;
     @Column()
     workingSide:WorkingSideEnum;
 
