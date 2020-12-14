@@ -45,10 +45,10 @@ class OrderController implements Controller {
         this.router.post(this.path, validationMiddleware(CreateOrderDto), this.addNewOrder)
         this.router.post(`${this.path}/currents/:id/newVersion`, this.addNewVersionOfOrder);
         this.router.delete(`${this.path}/currents/:id`, this.removeCurrentOrderAndVersionRegister);
-        this.router.get(`${this.path}/currents/:partnerCode`, this.findAllCurentVerionsOfOrderForGivenPartnerCode);
-        this.router.get(`${this.path}/currents/partner/:id`, this.findAllCurentVerionsOfOrderForGivenPartneId);
-
+        this.router.get(`${this.path}/currents/businessPartner/:partnerCode`, this.findAllCurentVerionsOfOrderForGivenPartnerCode);
+        this.router.get(`${this.path}/currents/businessPartner/:id`, this.findAllCurentVerionsOfOrderForGivenPartneId);
         this.router.get(`${this.path}/:id`, this.getOneOrderById);
+        this.router.get(`${this.path}/orderVersionRegister/:id`, this.findOrderVersionRegisterById)
         //remeber to add authentication admin authorization middleware after tests
 
 
@@ -196,6 +196,25 @@ try{
         }
 
     }
+
+    private findOrderVersionRegisterById = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
+        try{
+            const id:string=request.params.id;
+
+
+            const orderVersionRegister:OrderVersionRegister=await this.service.findOrderVersionRegisterById(id);
+
+
+            response.send(orderVersionRegister);
+
+
+        }
+        catch (error) {
+            next(error);
+        }
+
+    }
+
 
 }
 

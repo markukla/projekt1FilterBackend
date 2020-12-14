@@ -71,13 +71,14 @@ class OrderService implements RepositoryService {
 
     }
     public async findOrderVersionRegisterById(id:string):Promise<OrderVersionRegister>{
-      const foundRegister=  await this.manager.findOne(OrderVersionRegister,id);
+      const foundRegister=  await this.manager.findOne(OrderVersionRegister,id,{relations:["ordersInthisRegister"]});
       return foundRegister
     }
     public async findAllOrdersVersionsRegisters():Promise<OrderVersionRegister[]>{
         const ordersRegisters=await this.manager.find(OrderVersionRegister,{relations:["ordersInthisRegister"]});
         return ordersRegisters;
     }
+
     public async findAllCurentVerionsOfOrder():Promise<Order[]>{
         const ordersRegisters= await this.findAllOrdersVersionsRegisters();
         let currentOrders:Order[]=[];
