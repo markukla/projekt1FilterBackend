@@ -56,6 +56,7 @@ class ProductController implements Controller{
         this.router.post(this.path, this.addOneProduct);//remeber to add authentication admin authorization middleware after tests
         this.router.post(`/uploadDrawing`, this.upload.single("file"), this.uploadedDrawingToserwerCreaTeMiniatureAndReturnPaths);
         this.router.get(`/upload`, this.showUploadForm);
+        this.router.post(`${this.path}/productInfo/getByTypeTopBottom`, this.getProductByProductTypeProductTopProductBottom)
 
 
     }
@@ -139,6 +140,26 @@ class ProductController implements Controller{
 
 
     }
+    private getProductByProductTypeProductTopProductBottom = async (request: express.Request, response: express.Response, next: express.NextFunction)=>{
+        const createProductDto: CreateProductDto = request.body;
+        try{
+            const foundProduct:Product=await this.service.findOneProductByProductTypeProductTopTypeProductBottomTypeAndAppropriateCodes(createProductDto);
+            if(foundProduct){
+
+                response.send(foundProduct)
+            }
+            else {
+                next(new ProductNotFoundExceptionn(null));
+            }
+        }
+        catch (error) {
+            next(error);
+        }
+
+
+
+    }
+
     private deleteOneProductById = async (request: express.Request, response: express.Response, next: express.NextFunction)=>{
         const id:string=request.params.id;
         try{
