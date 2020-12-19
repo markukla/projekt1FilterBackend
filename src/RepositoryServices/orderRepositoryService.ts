@@ -17,6 +17,7 @@ import OrderVersionRegister from "../Models/OrderVersionRegister/orderVersionReg
 import OrderDetails from "../Models/OrderDetail/orderDetails.entity";
 import OrderNotFoundException from "../Exceptions/OrderNotFoundException";
 import User from "../Models/Users/user.entity";
+import NewestOrderNumber from "../Models/Order/newestOrderNumber";
 
 
 class OrderService implements RepositoryService {
@@ -48,22 +49,11 @@ class OrderService implements RepositoryService {
 
     public async addNewOrder(createOrderDto: CreateOrderDto): Promise<Order> {
 
-        let orderNumber:number=await this.obtainOrderNumberForNewOrder();
-        let versionNumber:string =this.getCurrentDateAndTime();
-        let totalNumber=`${orderNumber}.${versionNumber}`
-
-
         const orderToSave: Order = {
             // it would be good to add only id of related object, because actually they are save, in this version extra quring is required. I need to try to optimize this it time allows !!
 
             ...createOrderDto,
             orderVersionRegister:new OrderVersionRegister(), // this entity is saved due to cascade enabled
-            data:this.getCurrentDateAndTime(),
-            orderNumber:orderNumber,
-            orderTotalNumber:totalNumber,
-            orderVersionNumber:versionNumber,
-
-
 
         };
         const savedOrder:Order = await this.repository.save(orderToSave);
@@ -150,16 +140,9 @@ On the end i remove version register object for given order, to remove all versi
 
 const registerToUpdate:OrderVersionRegister= currentOrder.orderVersionRegister;
 
-let newOrderVersionNumber=this.getCurrentDateAndTime(); // currentOrder number and currentOrder version number is not given from frond but obtained in the backend
-        let newOrderTotalNumber=`${currentOrder.orderNumber}.${newOrderVersionNumber}`;
         const newVersionOfOrderToSaveInRegister: Order = {
             ...createOrderDto,
-            orderVersionRegister:registerToUpdate, // the same register as for cureent order
-            orderVersionNumber:newOrderVersionNumber,
-            orderNumber:currentOrder.orderNumber,  // has the same order number as in curent order, but diffrent version number
-            orderTotalNumber:newOrderTotalNumber,
-            data:this.getCurrentDateAndTime(),
-
+            orderVersionRegister: registerToUpdate
         };
 
 
@@ -168,17 +151,18 @@ let newOrderVersionNumber=this.getCurrentDateAndTime(); // currentOrder number a
 
     }
 
-    public async obtainOrderNumberForNewOrder():Promise<number>{
+    public async obtainOrderNumberForNewOrder():Promise<NewestOrderNumber>{
         const orderRegisters=await this.findAllOrdersVersionsRegisters();
-        let newestOrderNumber:number;
-        if(orderRegisters.length>0){
+        let newestNumber:number;
+        if(orderRegisters&&orderRegisters.length>0){
             let newestOrderNumberinDataBase:number=orderRegisters.length+1
-       newestOrderNumber=newestOrderNumberinDataBase;
+       newestNumber=newestOrderNumberinDataBase;
         }
         else {  // no ordersREgistersFound(they are created with addingOrders) which means that it is first order in database
 
-            newestOrderNumber=1;
+            newestNumber=1;
         }
+        const newestOrderNumber: NewestOrderNumber = {newestNumber:newestNumber };
         return newestOrderNumber;
 
     }

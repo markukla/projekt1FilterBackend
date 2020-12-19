@@ -1,9 +1,10 @@
-import {IsNumber, IsObject, IsString, Length} from "class-validator";
+import {IsDate, IsNumber, IsObject, IsString, Length} from "class-validator";
 import OrderDetails from "../OrderDetail/orderDetails.entity";
 import {Column} from "typeorm";
 import User from "../Users/user.entity";
 import Product from "../Products/product.entity";
 import Material from "../Materials/material.entity";
+import OrderVersionRegister from "../OrderVersionRegister/orderVersionRegister.entity";
 
 class CreateOrderDto{
     @IsObject()
@@ -18,12 +19,18 @@ class CreateOrderDto{
     orderDetails:OrderDetails;
     @IsString()
     index:string;
-
+    @IsDate()
+    data: Date;
+    @IsNumber()
+    orderNumber:number;  // it is not id because it is the same for orders with the same order version register
+    @IsString()
+    orderVersionNumber:string;
+    @IsString()
+    orderTotalNumber:string; // orderNumber and version number with some separator
     @IsString()
     orderName:string;
     @IsString()
     commentToOrder:string;
-
 
 }
 export default CreateOrderDto;

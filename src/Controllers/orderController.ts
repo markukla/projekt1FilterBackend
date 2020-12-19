@@ -24,6 +24,7 @@ import Order from "../Models/Order/order.entity";
 import {DeleteResult} from "typeorm";
 import OrderVersionRegister from "../Models/OrderVersionRegister/orderVersionRegister.entity";
 import OrderNotFoundException from "../Exceptions/OrderNotFoundException";
+import NewestOrderNumber from "../Models/Order/newestOrderNumber";
 const path = require('path');
 
 
@@ -49,6 +50,8 @@ class OrderController implements Controller {
         this.router.get(`${this.path}/currents/businessPartner/:id`, this.findAllCurentVerionsOfOrderForGivenPartneId);
         this.router.get(`${this.path}/:id`, this.getOneOrderById);
         this.router.get(`${this.path}/orderVersionRegister/:id`, this.findOrderVersionRegisterById)
+        this.router.get(`${this.path}/orderNumber/newest`, this.getOrderNumberForNewOrder)
+
         //remeber to add authentication admin authorization middleware after tests
 
 
@@ -214,6 +217,25 @@ try{
         }
 
     }
+
+    private getOrderNumberForNewOrder = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
+        try{
+
+
+
+            const newestOrderNumber: NewestOrderNumber=await this.service.obtainOrderNumberForNewOrder();
+
+
+            response.send(newestOrderNumber);
+
+
+        }
+        catch (error) {
+            next(error);
+        }
+
+    }
+
 
 
 }
