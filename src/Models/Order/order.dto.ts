@@ -20,7 +20,7 @@ class CreateOrderDto{
     @IsString()
     index:string;
     @IsDate()
-    data: Date|string;
+    data: string;
     @IsNumber()
     orderNumber:number;  // it is not id because it is the same for orders with the same order version register
     @IsString()

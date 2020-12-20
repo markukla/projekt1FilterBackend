@@ -20,7 +20,7 @@ class Order {
     index:string;
 
     @Column()
-    data:Date;
+    data:string
     @Column()
     orderName:string;
 
