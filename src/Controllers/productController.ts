@@ -40,7 +40,7 @@ class ProductController implements Controller{
             .end("Oops! Something went wrong!");
     };
     public upload = multer({
-        dest: "../../public/images"
+        dest: "../public/images"
         // you might also want to set some limits: https://github.com/expressjs/multer#limits
 
     });
@@ -201,12 +201,14 @@ class ProductController implements Controller{
         const date:Date=new Date();
         const time=date.getTime();
 
-        const orginalDrawingPath:string = path.join(__dirname, `../../public/images/`,`${time}${fileName}`);
+        const orginalDrawingPath:string = path.join(__dirname, `../public/images/`,`${time}${fileName}`);
         console.log(orginalDrawingPath);
         /* path starts from host*/
         const host = req.host;
         console.log(host);
-        const filePath = req.protocol + "://" + host + ':5000/' +`${time}public/images/${fileName}`;
+        /* to make express static middleware work properly i need path to add to localhost:5000/drawingPathFromPublicDirecotry */
+        const drawingPathFromPublicDirecotry =orginalDrawingPath.split('public')[1];
+        console.log(`drawingPathToPublicDirecotry= ${drawingPathFromPublicDirecotry}`);
 
 
 
@@ -227,7 +229,7 @@ class ProductController implements Controller{
         }
         let miniaturePath =''; // need to be implemented
         const drawingPaths: DrawingPaths = {
-            urlOfOrginalDrawing: orginalDrawingPath,
+            urlOfOrginalDrawing: drawingPathFromPublicDirecotry,
             urlOfThumbnailDrawing: miniaturePath
         };
 

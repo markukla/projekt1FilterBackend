@@ -42,7 +42,9 @@ class App {
 
     private initializeMiddlewares() {
         this.app.use(cors());
-        this.app.use(express.static(__dirname + '../public'));
+        const publicDirectoryPath= path.join(__dirname, '/public');
+        console.log(`publicDirectoryPath= ${publicDirectoryPath}`);
+        this.app.use(express.static(publicDirectoryPath));
         this.app.set('views', path.join(__dirname, 'views'));
         this.app.set('view engine', 'ejs');
         this.app.use(bodyParser.json());
