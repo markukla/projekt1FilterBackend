@@ -294,7 +294,7 @@ class UserService implements RepositoryService {
     public findOnePartnerById = async (id: string): Promise<User> => {
 
 
-        const foundUser: User = await this.manager.findOne(User, id, {relations: ['roles']});
+        const foundUser: User = await this.manager.findOne(User, id, {relations: ['roles','ordersOfPartner']});
         if (!foundUser) {
             throw new BusinessPartnerNotFoundException(String(id));
         }

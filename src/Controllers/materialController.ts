@@ -33,7 +33,7 @@ class MaterialController implements Controller{
     }
 
     private initializeRoutes() {
-        this.router.get(this.path, authMiddleware,adminAuthorizationMiddleware,this.getAllMaterials);
+        this.router.get(this.path, authMiddleware,this.getAllMaterials);
         this.router.get(`${this.path}/:id`, authMiddleware,adminAuthorizationMiddleware, this.getOneMaterialById);
         this.router.patch(`${this.path}/:id`,authMiddleware,adminAuthorizationMiddleware, validationMiddleware(CreateMaterialDto, true), this.updateMaterialById);
         this.router.delete(`${this.path}/:id`,authMiddleware,adminAuthorizationMiddleware, this.deleteOneMaterialById);

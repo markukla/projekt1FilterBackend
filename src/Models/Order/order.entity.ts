@@ -20,14 +20,14 @@ class Order {
     index:string;
 
     @Column()
-    data:string
+    data:string;
     @Column()
     orderName:string;
 
     @Column({nullable:true})
     commentToOrder?:string;
 
-    @ManyToOne(() => User, (businessPartner: User) => businessPartner.ordersWhichPointThisUserAsBusinessPartner, {eager: true})    // has a forein key
+    @ManyToOne(() => User, (businessPartner: User) => businessPartner.ordersOfPartner, {eager: true})    // has a forein key
     businessPartner: User;
 
     @ManyToOne(() => Product, {eager: true})  // has a forein key
@@ -39,7 +39,7 @@ class Order {
     @OneToOne(() => OrderDetails, {eager: true, cascade:true,onDelete:"CASCADE"})// has a forein key
     @JoinColumn() // this determines that foreing key will be on this side of relation
     orderDetails: OrderDetails;
-    @ManyToOne(() => User, (creator: User) => creator.ordersCreatedByThisUser, {eager: true})
+    @ManyToOne(() => User, (creator: User) => creator.orderCreatedByUser, {eager: true})
     creator: User
 
 @ManyToOne(()=>OrderVersionRegister,(orderVersionRegister:OrderVersionRegister)=>orderVersionRegister.ordersInthisRegister,{eager: true,cascade:true})

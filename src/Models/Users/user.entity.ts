@@ -40,11 +40,11 @@ class User {
     roles: Role[];
 
 @OneToMany(()=>Order,(order:Order)=>order.businessPartner)  //one businessPartene:USer can be asigned to many orders
-    ordersWhichPointThisUserAsBusinessPartner?:Order[];
+    ordersOfPartner?:Order[];
 
 
 @OneToMany(()=>Order,(order:Order)=>order.creator)  // user can create many orders
-ordersCreatedByThisUser?:Order[];
+orderCreatedByUser?:Order[];
 
 }
 
