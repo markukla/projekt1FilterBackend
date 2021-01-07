@@ -108,13 +108,13 @@ class OrderService implements RepositoryService {
 
 
     public async deleteOrderVersionRegisterById(currentOrderId:string){
-       const currentOrder=await this.repository.findOne(currentOrderId,{relations:["orderVersionRegister"]});
+       const currentOrder=await this.repository.findOne(currentOrderId);
        if(!currentOrder){
            throw new OrderNotFoundException(currentOrderId);
        }
        const orderRegisterToDeleteId=currentOrder.orderVersionRegister.id;
        // other query is required to obtain orders in this OrderRegister, it cannot be done by currentOrder.orderVersionRegister.orders due to eager limitations
-       const orderRegisterToDeleteObtainedWithDiffrentQuery=await this.manager.findOne(OrderVersionRegister,orderRegisterToDeleteId,{relations:["orders"]})
+       const orderRegisterToDeleteObtainedWithDiffrentQuery=await this.manager.findOne(OrderVersionRegister,orderRegisterToDeleteId,{relations:["ordersInthisRegister"]})
        const ordersOfOrderRegsterTODelete=orderRegisterToDeleteObtainedWithDiffrentQuery.ordersInthisRegister;
 
 /*

@@ -140,10 +140,7 @@ class OrderController implements Controller {
 
         try {
             const curerntOrderid: string = request.params.id;
-            const currentOrder = await this.service.findOneOrderById(curerntOrderid);
-
-            const versionRegisterId = String(currentOrder.orderVersionRegister.id);
-            const deletedOrderRegister: OrderVersionRegister = await this.service.deleteOrderVersionRegisterById(versionRegisterId);
+            const deletedOrderRegister: OrderVersionRegister = await this.service.deleteOrderVersionRegisterById(curerntOrderid);
             if (deletedOrderRegister) {
                 response.send({
                     status: 200,

@@ -24,14 +24,17 @@ class Order {
     @Column()
     orderName:string;
 
-    @Column({nullable:true})
+    @Column()
     commentToOrder?:string;
+
 
     @ManyToOne(() => User, (businessPartner: User) => businessPartner.ordersOfPartner, {eager: true})    // has a forein key
     businessPartner: User;
 
-    @ManyToOne(() => Product, {eager: true})  // has a forein key
+
+    @ManyToOne(() => Product, {eager: true} )  // has a forein key
     product: Product;
+
 
     @ManyToOne(() => Material, (productMaterial: Material) => productMaterial.orders, {eager: true})
     productMaterial: Material;
