@@ -48,12 +48,12 @@ class OrderService implements RepositoryService {
     }
 
     public async addNewOrder(createOrderDto: CreateOrderDto): Promise<Order> {
-
+const orderVersionRegister = new OrderVersionRegister(createOrderDto.orderNumber);
         const orderToSave: Order = {
             // it would be good to add only id of related object, because actually they are save, in this version extra quring is required. I need to try to optimize this it time allows !!
 
             ...createOrderDto,
-            orderVersionRegister:new OrderVersionRegister(), // this entity is saved due to cascade enabled
+            orderVersionRegister:orderVersionRegister, // this entity is saved due to cascade enabled
 
         };
         const savedOrder:Order = await this.repository.save(orderToSave);

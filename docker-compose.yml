@@ -6,7 +6,7 @@ services:
     ports:
       - "5436:5436"
     volumes:
-      - /data/postgres:/data/postgres
+      - /date/postgres:/date/postgres
     env_file:
       - docker.env
     command:
@@ -18,7 +18,7 @@ services:
       container_name: Filter_test
       image: postgres:latest
       volumes:
-        - /data/postgres:/data/postgres
+        - /date/postgres:/date/postgres
       env_file:
         - docker_test.env
       ports:
@@ -38,7 +38,7 @@ services:
     ports:
       - "8082:82"
     volumes:
-      - /data/pgadmin:/root/.pgadmin
+      - /date/pgadmin:/root/.pgadmin
     env_file:
       - docker.env
       - .env
