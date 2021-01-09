@@ -4,9 +4,6 @@ import Controller from 'interfaces/controller.interface';
 
 import validationMiddleware from "../middleware/validation.middleware";
 
-
-
-
 import authMiddleware from "../middleware/auth.middleware";
 import adminAuthorizationMiddleware from "../middleware/adminAuthorization.middleware";
 import Material from "../Models/Materials/material.entity";
@@ -26,6 +23,8 @@ import OrderVersionRegister from "../Models/OrderVersionRegister/orderVersionReg
 import OrderNotFoundException from "../Exceptions/OrderNotFoundException";
 import NewestOrderNumber from "../Models/Order/newestOrderNumber";
 const path = require('path');
+const puppeteer = require('puppeteer');
+const { DownloaderHelper } = require('node-downloader-helper');
 
 
 
@@ -49,8 +48,9 @@ class OrderController implements Controller {
         this.router.get(`${this.path}/currents/businessPartner/:partnerCode`, this.findAllCurentVerionsOfOrderForGivenPartnerCode);
         this.router.get(`${this.path}/currents/businessPartner/:id`, this.findAllCurentVerionsOfOrderForGivenPartneId);
         this.router.get(`${this.path}/:id`, this.getOneOrderById);
-        this.router.get(`${this.path}/orderVersionRegister/:id`, this.findOrderVersionRegisterById)
-        this.router.get(`${this.path}/orderNumber/newest`, this.getOrderNumberForNewOrder)
+        this.router.get(`${this.path}/orderVersionRegister/:id`, this.findOrderVersionRegisterById);
+        this.router.get(`${this.path}/orderNumber/newest`, this.getOrderNumberForNewOrder);
+        this.router.post(`${this.path}/drawing/save/pdf`, this.usePuppetearToObtainDrawingPdf)
 
         //remeber to add authentication admin authorization middleware after tests
 
@@ -232,8 +232,37 @@ try{
         }
 
     }
+    private usePuppetearToObtainDrawingPdf = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
+        const url = request.body.url
+        console.log(`url to print= ${url}`);
+        try{
 
+            const browser = await puppeteer.launch({headless: true });
+            const page = await browser.newPage();
+            await page.goto(url, {waitUntil: 'networkidle2'});
+            const savedPdfUrl:string = path.join(__dirname,"/page.pdf");
+            const savedPNGURL= path.join(__dirname,"/page.png");
+            console.log(`savedPdfUrl= ${savedPdfUrl}`);
+            // await page.pdf({ format: 'A4', url:savedPdfUrl });
+            await page.pdf({ path:savedPdfUrl, format:"A4" });
+            await page.screenshot({ path:savedPNGURL});
+            console.log('screen taken');
+            await browser.close();
+           /* const file = fs.createReadStream(savedPdfUrl);
+            const stat = fs.statSync(savedPdfUrl);
+            response.setHeader('Content-Length', stat.size);
+            response.setHeader('Content-Type', 'application/pdf');
+            response.setHeader('Content-Disposition', 'attachment; filename=quote.pdf');
+            file.pipe(response);
+*/
+            response.contentType("application/pdf");
+            response.sendFile(savedPNGURL);
+        }
+        catch (error) {
+next(error);
+        }
 
+    }
 
 }
 
