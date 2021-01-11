@@ -8,8 +8,6 @@ import DimensionTextFIeldInfo from "./dimensionTextFIeldInfo";
 //this class represents fields filled by the user, oter fields like url addresses will be obtained in other way
 class CreateProductDto{
 
-
-
     @IsObject()
     productType:ProductType;
 
@@ -29,7 +27,5 @@ class CreateProductDto{
 
     @IsString()
     urlOfThumbnailDrawing:string;
-
-
 }
 export default CreateProductDto;

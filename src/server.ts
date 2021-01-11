@@ -17,6 +17,7 @@ import OrderController from "./Controllers/orderController";
 import ProductTypeController from "./Controllers/productTypeController";
 import ProductTopController from "./Controllers/productTopController";
 import ProductBottomController from "./Controllers/productBottomController";
+import DimensionCodeController from "./Controllers/dimensionCodeController";
 
 validateEnv();
 
@@ -41,7 +42,8 @@ validateEnv();
             new OrderController(),
             new ProductTypeController(),
             new ProductTopController(),
-            new ProductBottomController()
+            new ProductBottomController(),
+            new DimensionCodeController()
 
 
 

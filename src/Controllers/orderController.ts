@@ -235,35 +235,52 @@ try{
     private usePuppetearToObtainDrawingPdf = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
         const url = request.body.url
         console.log(`url to print= ${url}`);
-        try{
+        try {
+            /*
+            it work fine but saves file on server which is not necessary
+            *  const browser = await puppeteer.launch({headless: true });
+                        const page = await browser.newPage();
+                        await page.goto(url, {waitUntil: 'networkidle2'});
+                        const savedPdfUrl:string = path.join(__dirname,"/page.pdf");
+                        const savedPNGURL= path.join(__dirname,"/page.png");
+                        console.log(`savedPdfUrl= ${savedPdfUrl}`);
+                        // await page.pdf({ format: 'A4', url:savedPdfUrl });
+                        const pdf =await page.pdf({ path:savedPdfUrl, format:"A4" });
+                        await page.screenshot({ path:savedPNGURL});
+                        console.log('screen taken');
+                        await browser.close();
 
-            const browser = await puppeteer.launch({headless: true });
-            const page = await browser.newPage();
-            await page.goto(url, {waitUntil: 'networkidle2'});
-            const savedPdfUrl:string = path.join(__dirname,"/page.pdf");
-            const savedPNGURL= path.join(__dirname,"/page.png");
-            console.log(`savedPdfUrl= ${savedPdfUrl}`);
-            // await page.pdf({ format: 'A4', url:savedPdfUrl });
-            await page.pdf({ path:savedPdfUrl, format:"A4" });
-            await page.screenshot({ path:savedPNGURL});
-            console.log('screen taken');
-            await browser.close();
-           /* const file = fs.createReadStream(savedPdfUrl);
-            const stat = fs.statSync(savedPdfUrl);
-            response.setHeader('Content-Length', stat.size);
-            response.setHeader('Content-Type', 'application/pdf');
-            response.setHeader('Content-Disposition', 'attachment; filename=quote.pdf');
-            file.pipe(response);
-*/
-            response.contentType("application/pdf");
-            response.sendFile(savedPNGURL);
-        }
-        catch (error) {
+                        response.download(savedPdfUrl, function (err) {
+                            if (err) {
+                                console.log("Error");
+                                console.log(err);
+                            } else {
+                                console.log("Success");
+                            }
+                        });
+
+                    }*/
+            const pdf = await this.printPdf(url);
+            response.set({'Content-Type': 'application/pdf', 'Content-Length': pdf.length})
+            response.send(pdf);
+        }catch (error) {
 next(error);
         }
 
     }
 
+     printPdf = async (urlToPrint: string) => {
+    const browser = await puppeteer.launch({ headless: true });
+    const page = await browser.newPage();
+    await page.goto(urlToPrint, {waitUntil: 'networkidle0'});
+const pdf = await page.pdf({ format: 'A4' }); // does not save file on server but returns it to send to client
+
+await browser.close();
+return pdf
+
 }
+}
+
+
 
 export default OrderController;
