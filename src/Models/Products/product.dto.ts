@@ -17,8 +17,6 @@ class CreateProductDto{
     @IsObject()
     productBottom:ProductBottom;
 
-    @IsString()
-    dimensionsCodes:string;
     @IsArray()
     dimensionsTextFieldInfo:DimensionTextFIeldInfo[];
 

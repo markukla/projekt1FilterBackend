@@ -22,10 +22,6 @@ class Product{  // this class represents type of product and technical drawing o
     productTop:ProductTop;
 
     @Column()
-    dimensionsCodes:string; // all dimensions separeted by coma
-
-
-    @Column()
     urlOfOrginalDrawing:string;
 
     @Column()
