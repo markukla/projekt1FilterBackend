@@ -21,7 +21,7 @@ class ProductType {
     @JoinTable({name:"productType_productTop_id_pairs"})
     topsForThisProductType:ProductTop[];
 
-    @ManyToMany(()=>ProductBottom, (bottomsForThisProductType:ProductBottom) => bottomsForThisProductType.productTypesWithThisBottom )
+    @ManyToMany(()=>ProductBottom, (bottomsForThisProductType:ProductBottom) => bottomsForThisProductType.productTypesWithThisBottom)
     @JoinTable({name:"productType_productBottom_id_pairs"})
     bottomsForThisProductType:ProductBottom[];
 
