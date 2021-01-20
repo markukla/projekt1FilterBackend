@@ -1,10 +1,11 @@
 import RepositoryService from "../interfaces/service.interface";
 import {DeleteResult, getRepository} from "typeorm";
 import Language from "../Models/Languages/language.entity";
-import LanguageCode from "../Models/LanguageCodes/languageCode.entity";
-import CreateLanguageCodeDto from "../Models/LanguageCodes/languageCode.dto";
+import Vocabulary from "../Models/LanguageCodes/vocabulary.entity";
+import CreateVocabularyDto from "../Models/LanguageCodes/vocabulary.dto";
 import LanguageNotFoundException from "../Exceptions/LanguageNotFoundException";
 import LanguageAlreadyExistException from "../Exceptions/LanguageAlreadyExistException";
+import LanguageDto from "../Models/Languages/language.dto";
 
 class LanguageService implements RepositoryService{
 
@@ -19,7 +20,7 @@ class LanguageService implements RepositoryService{
 
 
     }
-    public async findOneByLanguageCode(languageCode:string):Promise<Language>{
+    public async findOneLanguageByLanguageCode(languageCode:string):Promise<Language>{
         const foundRecords =await this.repository.findOne({languageCode:languageCode});
         return foundRecords;
 
@@ -28,14 +29,14 @@ class LanguageService implements RepositoryService{
     }
 
 
-    public async findAllDimensionCodes():Promise<Language[]>{
+    public async findAllLanguages():Promise<Language[]>{
         const foundRecords =await this.repository.find();
 
         return foundRecords;
 
     }
-    public async addOneDimensionCode(createLanguageDto:CreateLanguageCodeDto):Promise<Language>{
-        const recordAlreadyExistInDatabase = await this.findOneByLanguageCode(createLanguageDto.languageCode)
+    public async addOneLanguage(createLanguageDto: LanguageDto):Promise<Language>{
+        const recordAlreadyExistInDatabase = await this.findOneLanguageByLanguageCode(createLanguageDto.languageCode)
 
         if(recordAlreadyExistInDatabase){
             throw new LanguageAlreadyExistException(createLanguageDto.languageCode);
@@ -49,10 +50,10 @@ class LanguageService implements RepositoryService{
         return savedRecord;
 
     }
-    public async updateDimensionCodeById(id:string, createLanguageDto:CreateLanguageCodeDto):Promise<Language>{
+    public async updateLanguageById(id:string, createLanguageDto:LanguageDto):Promise<Language>{
         const idOfExistingRecord:boolean=await this.findOneById(id)!==null;
         if(idOfExistingRecord){
-            const recordWithThisCodeInDatabase= await this.findOneByLanguageCode(createLanguageDto.languageCode)
+            const recordWithThisCodeInDatabase= await this.findOneLanguageByLanguageCode(createLanguageDto.languageCode)
             // do not allow to update if other material with this code or name already exist and throw exception
             if(recordWithThisCodeInDatabase){
                 if((recordWithThisCodeInDatabase.id!==Number(id))){

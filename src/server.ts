@@ -18,6 +18,8 @@ import ProductTypeController from "./Controllers/productTypeController";
 import ProductTopController from "./Controllers/productTopController";
 import ProductBottomController from "./Controllers/productBottomController";
 import DimensionCodeController from "./Controllers/dimensionCodeController";
+import LanguageController from "./Controllers/languageController";
+import VocabularyController from "./Controllers/vocabullaryController";
 
 validateEnv();
 
@@ -43,7 +45,8 @@ validateEnv();
             new ProductTypeController(),
             new ProductTopController(),
             new ProductBottomController(),
-            new DimensionCodeController()
+            new LanguageController(),
+            new VocabularyController()
 
 
 
