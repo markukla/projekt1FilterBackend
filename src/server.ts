@@ -45,6 +45,7 @@ validateEnv();
             new ProductTypeController(),
             new ProductTopController(),
             new ProductBottomController(),
+            new DimensionCodeController(),
             new LanguageController(),
             new VocabularyController()
 

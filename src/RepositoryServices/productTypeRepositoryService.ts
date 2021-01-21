@@ -35,20 +35,6 @@ class ProductTypeService implements RepositoryService {
 
     }
 
-    public async findOneProductTypeByProductTypeName(createProductTypeDto: CreateProductTypeDto): Promise<ProductType> {
-        const foundProduct: ProductType = await this.repository.findOne({name: createProductTypeDto.name},{relations:["topsForThisProductType","bottomsForThisProductType"]});
-
-        return foundProduct;
-
-
-    }
-    public async fndOneProductTypeByName(name: string): Promise<ProductTop> {
-        const productType: ProductType = await this.repository.findOne({
-            name:name
-        });
-
-        return productType;
-    }
     public async findOneProductTypeByCode(code: string): Promise<ProductTop> {
         const productType: ProductType = await this.repository.findOne({
             code:code
@@ -68,8 +54,7 @@ class ProductTypeService implements RepositoryService {
     public async addOneProductType(createProductTypeDto: CreateProductTypeDto): Promise<ProductType> {
         // do not allow to add the same product twice
         const productTypeWithThisCodeInDatabase: ProductType = await this.findOneProductTypeByProductTypeCode(createProductTypeDto);
-        const productTypeWithThisNameInDatabase: ProductType = await this.findOneProductTypeByProductTypeName(createProductTypeDto);
-        let productTypeAlreadyExistInDatabase: boolean = productTypeWithThisCodeInDatabase !== undefined || productTypeWithThisNameInDatabase !== undefined;
+        let productTypeAlreadyExistInDatabase: boolean = productTypeWithThisCodeInDatabase !== undefined;
 
         if (productTypeAlreadyExistInDatabase) {
             throw new ProductTypeAlreadyExistsException();
@@ -90,14 +75,8 @@ class ProductTypeService implements RepositoryService {
 
             // do not allow to update if other ProductType with the same filds already exists
             const productTypeWithThisCodeInDatabase: ProductType = await this.findOneProductTypeByProductTypeCode(createProductTypeDto);
-            const productTypeWithThisNameInDatabase: ProductType = await this.findOneProductTypeByProductTypeName(createProductTypeDto);
 
-            if (productTypeWithThisNameInDatabase) {
-                if (productTypeWithThisNameInDatabase.id !== Number(id)) {
-                    throw new ProductTypeAlreadyExistsException();
 
-                }
-            }
             if (productTypeWithThisCodeInDatabase) {
                 if (productTypeWithThisCodeInDatabase.id !== Number(id)) {
                     throw new ProductTypeAlreadyExistsException();

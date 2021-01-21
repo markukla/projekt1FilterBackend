@@ -56,7 +56,7 @@ class LanguageService implements RepositoryService{
             const recordWithThisCodeInDatabase= await this.findOneLanguageByLanguageCode(createLanguageDto.languageCode)
             // do not allow to update if other material with this code or name already exist and throw exception
             if(recordWithThisCodeInDatabase){
-                if((recordWithThisCodeInDatabase.id!==Number(id))){
+                if(recordWithThisCodeInDatabase.id!==Number(id)){
                     throw new LanguageAlreadyExistException(createLanguageDto.languageCode);
                 }
             }

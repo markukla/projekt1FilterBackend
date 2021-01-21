@@ -83,7 +83,7 @@ return foundDimension;
             const dimensionCodeWithThisCodeInDatabase= await this.findOneByDimensionCode(createDimensionDto.dimensionCode)
             // do not allow to update if other material with this code or name already exist and throw exception
             if(dimensionCodeWithThisCodeInDatabase){
-                if((dimensionCodeWithThisCodeInDatabase.id!==Number(id))){
+                if(dimensionCodeWithThisCodeInDatabase.id!==Number(id)){
                     throw new DimensionCodeAlreadyExistException(createDimensionDto.dimensionCode);
                 }
             }

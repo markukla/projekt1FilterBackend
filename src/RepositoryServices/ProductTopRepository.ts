@@ -39,22 +39,6 @@ class ProductTopService implements RepositoryService {
 
 
     }
-    public async findOneProductTopByTopType(createProductTopDto: CreateProductTopDto): Promise<ProductTop> {
-        const productTop: ProductTop = await this.repository.findOne({
-            name:createProductTopDto.name
-        });
-
-        return productTop;
-
-
-    }
-    public async findOneProductTopByName(name: string): Promise<ProductTop> {
-        const productTop: ProductTop = await this.repository.findOne({
-            name:name
-        });
-
-        return productTop;
-    }
     public async findOneProductTopByCode(code: string): Promise<ProductTop> {
         const productTop: ProductTop = await this.repository.findOne({
             code:code
@@ -75,8 +59,7 @@ class ProductTopService implements RepositoryService {
     public async addOneProductTope(createProductTopDto: CreateProductTopDto): Promise<ProductTop> {
         // do not allow to add the same product twice
         const productTopWithThisCodeInDatabase: ProductTop = await this.findOneProductTopByTopCode(createProductTopDto);
-        const productTopWithThisTypeInDatabase: ProductTop = await this.findOneProductTopByTopType(createProductTopDto);
-        let productTopAlreadyExistInDatabase:boolean=productTopWithThisCodeInDatabase!==undefined||productTopWithThisTypeInDatabase!==undefined;
+        let productTopAlreadyExistInDatabase:boolean=productTopWithThisCodeInDatabase!==undefined;
 
         if (productTopAlreadyExistInDatabase) {
             throw new ProductTopAlreadyExistsException();
@@ -97,13 +80,6 @@ class ProductTopService implements RepositoryService {
 
             // do not allow to update if other ProductType with the same filds already exists
             const productTopWithThisCodeInDatabase: ProductTop = await this.findOneProductTopByTopCode(createProductTopDto);
-            const productTopWithThisTypeInDatabase: ProductTop = await this.findOneProductTopByTopType(createProductTopDto);
-            if (productTopWithThisTypeInDatabase) {
-                if (productTopWithThisTypeInDatabase.id !== Number(id)) {
-                    throw new ProductTopAlreadyExistsException();
-
-                }
-            }
             if (productTopWithThisCodeInDatabase) {
                 if (productTopWithThisCodeInDatabase.id !== Number(id)) {
                     throw new ProductTopAlreadyExistsException();

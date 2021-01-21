@@ -34,23 +34,7 @@ class ProductBottomService implements RepositoryService {
 
 
     }
-    public async findOneProductBottomByBottomType(createProductBottomDto: CreateProductBottomDto): Promise<ProductBottom> {
-        const productBottom: ProductBottom = await this.repository.findOne({
-            name:createProductBottomDto.name
-        });
 
-        return productBottom;
-
-
-    }
-
-    public async findOneProductBottomByName(name: string): Promise<ProductTop> {
-        const productBottom: ProductBottom = await this.repository.findOne({
-            name:name
-        });
-
-        return productBottom;
-    }
     public async findOneProductBottomByCode(code: string): Promise<ProductTop> {
         const productBottom: ProductBottom = await this.repository.findOne({
             code:code
@@ -71,8 +55,7 @@ class ProductBottomService implements RepositoryService {
     public async addOneProductBottom(createProductBottomDto: CreateProductBottomDto): Promise<ProductBottom> {
         // do not allow to add the same product twice
         const productBottomWithThisCodeInDatabase: ProductBottom = await this.findOneProductBottomByBottomCode(createProductBottomDto);
-        const productBottomWithThisTypeInDatabase: ProductBottom = await this.findOneProductBottomByBottomType(createProductBottomDto);
-        let productBottomAlreadyExistInDatabase:boolean=productBottomWithThisCodeInDatabase!==undefined||productBottomWithThisTypeInDatabase!==undefined;
+        let productBottomAlreadyExistInDatabase:boolean=productBottomWithThisCodeInDatabase!==undefined;
 
         if (productBottomAlreadyExistInDatabase) {
             throw new ProductBottomAlreadyExistsException();
@@ -93,13 +76,6 @@ class ProductBottomService implements RepositoryService {
 
             // do not allow to update if other ProductType with the same filds already exists
             const productBottomWithThisCodeInDatabase: ProductBottom = await this.findOneProductBottomByBottomCode(createProductBottomDto);
-            const productBottomWithThisTypeInDatabase: ProductBottom = await this.findOneProductBottomByBottomType(createProductBottomDto);
-            if (productBottomWithThisTypeInDatabase) {
-                if (productBottomWithThisTypeInDatabase.id !== Number(id)) {
-                    throw new ProductBottomAlreadyExistsException();
-
-                }
-            }
             if (productBottomWithThisCodeInDatabase) {
                 if (productBottomWithThisCodeInDatabase.id !== Number(id)) {
                     throw new ProductBottomAlreadyExistsException();

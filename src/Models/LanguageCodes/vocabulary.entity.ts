@@ -1,6 +1,7 @@
-import {Column, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import Order from "../Order/order.entity";
 import Language from "../Languages/language.entity";
+import languageRepositoryService from "../../RepositoryServices/languageRepositoryService";
 
 @Entity("vocabularies")
 class Vocabulary {
@@ -11,7 +12,7 @@ class Vocabulary {
     @Column({unique:true})
     variableName:string;
 
-    @Column()
+   @ManyToOne(() => Language, (language: Language) => language.vocabularies, {eager: true})
     language:Language;
 
 }
