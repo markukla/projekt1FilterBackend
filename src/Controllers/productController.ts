@@ -20,6 +20,7 @@ import * as multer from "multer";
 import * as fs from "fs";
 import {DrawingPaths} from "../Models/Products/drawingPaths";
 import NoPngFileException from "../Exceptions/noPngFile";
+import CreateProductTopDto from "../Models/Products/createProductTop.dto";
 const path = require('path');
 
 
@@ -49,7 +50,7 @@ class ProductController implements Controller{
 
     private initializeRoutes() {
         this.router.get(this.path, authMiddleware,adminAuthorizationMiddleware,this.getAllProducts);
-
+        this.router.patch(`${this.path}/:id`, validationMiddleware(CreateProductDto, true), this.updateProductById)
         this.router.get(`${this.path}/:id`, this.getOneProductById);
         this.router.post(`${this.path}/:id`, this.updateProductById);//remeber to add authentication admin authorization middleware after tests
         this.router.delete(`${this.path}/:id`,authMiddleware,adminAuthorizationMiddleware, this.deleteOneProductById);

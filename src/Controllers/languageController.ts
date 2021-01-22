@@ -19,8 +19,8 @@ class LanguageController implements Controller{
     }
 
     private initializeRoutes() {
-        this.router.get(this.path, authMiddleware,this.getAllLanguages);
-        this.router.get(`${this.path}/:id`, authMiddleware, this.getOneLanguageById);
+        this.router.get(this.path, this.getAllLanguages);
+        this.router.get(`${this.path}/:id`, this.getOneLanguageById);
         this.router.get(`${this.path}/codes/:code`,authMiddleware,adminAuthorizationMiddleware, this.languageWithThisCodeExists);
         this.router.patch(`${this.path}/:id`, authMiddleware,adminAuthorizationMiddleware, validationMiddleware(LanguageDto, true), this.updateLanguageCode);
         this.router.delete(`${this.path}/:id`,authMiddleware,adminAuthorizationMiddleware, this.deleteOneLanguageById);
