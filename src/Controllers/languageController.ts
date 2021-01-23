@@ -4,8 +4,8 @@ import VocabularyService from "../RepositoryServices/vocabularyRepositoryService
 import authMiddleware from "../middleware/auth.middleware";
 import adminAuthorizationMiddleware from "../middleware/adminAuthorization.middleware";
 import validationMiddleware from "../middleware/validation.middleware";
-import CreateVocabularyDto from "../Models/LanguageCodes/vocabulary.dto";
-import Vocabulary from "../Models/LanguageCodes/vocabulary.entity";
+import CreateVocabularyDto from "../Models/Vocabulary/vocabulary.dto";
+import Vocabulary from "../Models/Vocabulary/vocabulary.entity";
 import LanguageService from "../RepositoryServices/languageRepositoryService";
 import LanguageDto from "../Models/Languages/language.dto";
 import Language from "../Models/Languages/language.entity";

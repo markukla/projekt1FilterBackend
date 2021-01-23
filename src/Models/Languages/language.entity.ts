@@ -1,5 +1,5 @@
 import {Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn} from "typeorm";
-import Vocabulary from "../LanguageCodes/vocabulary.entity";
+import Vocabulary from "../Vocabulary/vocabulary.entity";
 
 @Entity("aplicationLanguages")
 class Language {
@@ -11,8 +11,6 @@ class Language {
     languageName: string;
     @Column()
     active: boolean;
-    @OneToMany( ()=> Vocabulary, (vocabularies: Vocabulary) => vocabularies.language)
-    vocabularies: Vocabulary[];
 }
 
 export default Language;

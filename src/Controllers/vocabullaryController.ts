@@ -7,8 +7,8 @@ import validationMiddleware from "../middleware/validation.middleware";
 import CreateDimensionCodeDto from "../Models/DimesnionCodes/createDimensionCode.dto";
 import DimensionCode from "../Models/DimesnionCodes/diemensionCode.entity";
 import VocabularyService from "../RepositoryServices/vocabularyRepositoryService";
-import CreateVocabularyDto from "../Models/LanguageCodes/vocabulary.dto";
-import Vocabulary from "../Models/LanguageCodes/vocabulary.entity";
+import CreateVocabularyDto from "../Models/Vocabulary/vocabulary.dto";
+import Vocabulary from "../Models/Vocabulary/vocabulary.entity";
 
 class VocabularyController implements Controller{
     public path = '/vocabularies';
@@ -21,7 +21,7 @@ class VocabularyController implements Controller{
     private initializeRoutes() {
         this.router.get(this.path, authMiddleware,this.getAllVocabularies);
         this.router.get(`${this.path}/:id`, authMiddleware, this.getOneVocabularyById);
-        this.router.get(`${this.path}/variableNames/:name`,authMiddleware,adminAuthorizationMiddleware, this.vocabularyWithThisVariableNameAlreadyExists);
+        this.router.get(`${this.path}/variableNames/:name`,authMiddleware,adminAuthorizationMiddleware, this.findVocabularyByVariableName);
         this.router.patch(`${this.path}/:id`, authMiddleware,adminAuthorizationMiddleware, validationMiddleware(CreateVocabularyDto, true), this.updateVocabulary);
         this.router.delete(`${this.path}/:id`,authMiddleware,adminAuthorizationMiddleware, this.deleteOneVocabularyById);
         this.router.post(this.path, authMiddleware,adminAuthorizationMiddleware, validationMiddleware(CreateVocabularyDto), this.addOneVocabulary);
@@ -116,20 +116,13 @@ class VocabularyController implements Controller{
 
     }
 
-    private vocabularyWithThisVariableNameAlreadyExists = async (request: express.Request, response: express.Response, next: express.NextFunction)=> {
+    private findVocabularyByVariableName = async (request: express.Request, response: express.Response, next: express.NextFunction)=> {
 
 
         const code = request.params.code;
-        let isTaken: boolean = false;
         try {
-            const foundLanguageCode = await this.service.findOneVocabularyByVariableName(code);
-            if (foundLanguageCode) {
-                isTaken = true;
-
-            } else {
-                isTaken = false;
-            }
-            response.send(isTaken);
+            const foundVocabulary = await this.service.findOneVocabularyByVariableName(code);
+            response.send(foundVocabulary);
         } catch (error) {
             next(error);
         }

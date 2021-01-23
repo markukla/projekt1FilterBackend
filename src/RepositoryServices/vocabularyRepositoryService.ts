@@ -6,8 +6,8 @@ import CreateMaterialDto from "../Models/Materials/material.dto";
 import MaterialAlreadyExistsException from "../Exceptions/MaterialAlreadyExistsException";
 import VocabularyAlreadyExistException from "../Exceptions/vocabularyAlreadyExistException";
 import VocabularyNotFoundException from "../Exceptions/vocabularyNotFoundException";
-import Vocabulary from "../Models/LanguageCodes/vocabulary.entity";
-import CreateVocabularyDto from "../Models/LanguageCodes/vocabulary.dto";
+import Vocabulary from "../Models/Vocabulary/vocabulary.entity";
+import CreateVocabularyDto from "../Models/Vocabulary/vocabulary.dto";
 
 class VocabularyService implements RepositoryService{
 

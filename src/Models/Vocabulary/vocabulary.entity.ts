@@ -2,18 +2,17 @@ import {Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "type
 import Order from "../Order/order.entity";
 import Language from "../Languages/language.entity";
 import languageRepositoryService from "../../RepositoryServices/languageRepositoryService";
+import LocalizedName from "../DimesnionCodes/localizedName";
 
 @Entity("vocabularies")
 class Vocabulary {
 
     @PrimaryGeneratedColumn()
     public id?: number;
-
     @Column({unique:true})
     variableName:string;
-
-   @ManyToOne(() => Language, (language: Language) => language.vocabularies, {eager: true})
-    language:Language;
+    @Column({ type:"jsonb"})
+    localizedNames: LocalizedName [];
 
 }
 export default Vocabulary;

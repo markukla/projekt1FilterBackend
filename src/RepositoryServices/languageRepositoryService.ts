@@ -1,8 +1,8 @@
 import RepositoryService from "../interfaces/service.interface";
 import {DeleteResult, getRepository} from "typeorm";
 import Language from "../Models/Languages/language.entity";
-import Vocabulary from "../Models/LanguageCodes/vocabulary.entity";
-import CreateVocabularyDto from "../Models/LanguageCodes/vocabulary.dto";
+import Vocabulary from "../Models/Vocabulary/vocabulary.entity";
+import CreateVocabularyDto from "../Models/Vocabulary/vocabulary.dto";
 import LanguageNotFoundException from "../Exceptions/LanguageNotFoundException";
 import LanguageAlreadyExistException from "../Exceptions/LanguageAlreadyExistException";
 import LanguageDto from "../Models/Languages/language.dto";
