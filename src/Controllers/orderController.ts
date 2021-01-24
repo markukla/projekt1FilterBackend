@@ -40,17 +40,17 @@ class OrderController implements Controller {
 
 
     private initializeRoutes() {
-        this.router.get(this.path, this.getAllOrders);
-        this.router.get(`${this.path}/currents`, this.getAllCurentVersionOfOrders);
-        this.router.post(this.path, validationMiddleware(CreateOrderDto), this.addNewOrder)
-        this.router.post(`${this.path}/currents/:id/newVersion`, this.addNewVersionOfOrder);
-        this.router.delete(`${this.path}/currents/:id`, this.removeCurrentOrderAndVersionRegister);
-        this.router.get(`${this.path}/currents/businessPartner/:partnerCode`, this.findAllCurentVerionsOfOrderForGivenPartnerCode);
-        this.router.get(`${this.path}/currents/businessPartner/:id`, this.findAllCurentVerionsOfOrderForGivenPartneId);
-        this.router.get(`${this.path}/:id`, this.getOneOrderById);
-        this.router.get(`${this.path}/orderVersionRegister/:id`, this.findOrderVersionRegisterById);
-        this.router.get(`${this.path}/orderNumber/newest`, this.getOrderNumberForNewOrder);
-        this.router.post(`${this.path}/drawing/save/pdf`, this.usePuppetearToObtainDrawingPdf)
+        this.router.get(this.path, authMiddleware, this.getAllOrders);
+        this.router.get(`${this.path}/currents`, authMiddleware, this.getAllCurentVersionOfOrders);
+        this.router.post(this.path, authMiddleware, validationMiddleware(CreateOrderDto), this.addNewOrder)
+        this.router.post(`${this.path}/currents/:id/newVersion`, authMiddleware, this.addNewVersionOfOrder);
+        this.router.delete(`${this.path}/currents/:id`, authMiddleware, this.removeCurrentOrderAndVersionRegister);
+        this.router.get(`${this.path}/currents/businessPartner/:partnerCode`, authMiddleware, this.findAllCurentVerionsOfOrderForGivenPartnerCode);
+        this.router.get(`${this.path}/currents/businessPartner/:id`, authMiddleware, this.findAllCurentVerionsOfOrderForGivenPartneId);
+        this.router.get(`${this.path}/:id`, authMiddleware, this.getOneOrderById);
+        this.router.get(`${this.path}/orderVersionRegister/:id`, authMiddleware, this.findOrderVersionRegisterById);
+        this.router.get(`${this.path}/orderNumber/newest`, authMiddleware,this.getOrderNumberForNewOrder);
+        this.router.post(`${this.path}/drawing/save/pdf`, authMiddleware, this.usePuppetearToObtainDrawingPdf)
 
         //remeber to add authentication admin authorization middleware after tests
 

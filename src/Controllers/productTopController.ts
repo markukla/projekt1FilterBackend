@@ -9,6 +9,8 @@ import ProductTopService from "../RepositoryServices/ProductTopRepository";
 import CreateProductTopDto from "../Models/Products/createProductTop.dto";
 import ProductTop from "../Models/Products/productTop.entity";
 import ProductTopNotFoundException from "../Exceptions/ProductTopNotFoundException";
+import authMiddleware from "../middleware/auth.middleware";
+import adminAuthorizationMiddleware from "../middleware/adminAuthorization.middleware";
 
 
 class ProductTopController implements Controller {
@@ -21,13 +23,13 @@ class ProductTopController implements Controller {
     }
 
     private initializeRoutes() {
-        this.router.get(this.path, this.getAllProductTopes);
-        this.router.get(`${this.path}/:id`, this.getOneProductTopById);
-        this.router.patch(`${this.path}/:id`, validationMiddleware(CreateProductTopDto, true), this.updateProductTypeById);
-        this.router.delete(`${this.path}/:id`, this.deleteOneProductTypeById);
-        this.router.post(this.path, validationMiddleware(CreateProductTopDto), this.addOneProductTope);
-        this.router.get(`${this.path}/codes/:code`, this.isCodeTaken);
-        this.router.get(`${this.path}/:id/codes/:code`, this.isCodeTakenForUpdate);
+        this.router.get(this.path, authMiddleware, this.getAllProductTopes);
+        this.router.get(`${this.path}/:id`, authMiddleware, this.getOneProductTopById);
+        this.router.patch(`${this.path}/:id`, authMiddleware,adminAuthorizationMiddleware,  validationMiddleware(CreateProductTopDto, true), this.updateProductTypeById);
+        this.router.delete(`${this.path}/:id`, authMiddleware,adminAuthorizationMiddleware,  this.deleteOneProductTypeById);
+        this.router.post(this.path, authMiddleware,adminAuthorizationMiddleware,  validationMiddleware(CreateProductTopDto), this.addOneProductTope);
+        this.router.get(`${this.path}/codes/:code`, authMiddleware, this.isCodeTaken);
+        this.router.get(`${this.path}/:id/codes/:code`, authMiddleware, this.isCodeTakenForUpdate);
     }
 
     private addOneProductTope = async (request: express.Request, response: express.Response, next: express.NextFunction) => {

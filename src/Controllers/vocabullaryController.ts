@@ -19,7 +19,7 @@ class VocabularyController implements Controller{
     }
 
     private initializeRoutes() {
-        this.router.get(this.path, authMiddleware,this.getAllVocabularies);
+        this.router.get(this.path, this.getAllVocabularies);
         this.router.get(`${this.path}/:id`, authMiddleware, this.getOneVocabularyById);
         this.router.get(`${this.path}/variableNames/:name`,authMiddleware,adminAuthorizationMiddleware, this.findVocabularyByVariableName);
         this.router.patch(`${this.path}/:id`, authMiddleware,adminAuthorizationMiddleware, validationMiddleware(CreateVocabularyDto, true), this.updateVocabulary);

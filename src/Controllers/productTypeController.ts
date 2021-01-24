@@ -7,6 +7,8 @@ import ProductTypeService from "../RepositoryServices/productTypeRepositoryServi
 import ProductType from "../Models/Products/productType.entity";
 import ProductTypeNotFoundException from "../Exceptions/ProductTypeNotFoundException";
 import validationMiddleware from "../middleware/validation.middleware";
+import authMiddleware from "../middleware/auth.middleware";
+import adminAuthorizationMiddleware from "../middleware/adminAuthorization.middleware";
 
 
 class ProductTypeController implements Controller {
@@ -19,13 +21,13 @@ class ProductTypeController implements Controller {
     }
 
     private initializeRoutes() {
-        this.router.get(this.path, this.getAllProductTypes);
-        this.router.get(`${this.path}/:id`, this.getOneProductTypeById);
-        this.router.patch(`${this.path}/:id`, validationMiddleware(CreateProductTypeDto, true), this.updateProductTypeById);
-        this.router.delete(`${this.path}/:id`, this.deleteOneProductTypeById);
-        this.router.post(this.path, validationMiddleware(CreateProductTypeDto), this.addOneProductType);
-        this.router.get(`${this.path}/codes/:code`, this.isCodeTaken);
-        this.router.get(`${this.path}/:id/codes/:code`, this.isCodeTakenForUpdate);
+        this.router.get(this.path, authMiddleware, this.getAllProductTypes);
+        this.router.get(`${this.path}/:id`, authMiddleware, this.getOneProductTypeById);
+        this.router.patch(`${this.path}/:id`,authMiddleware,adminAuthorizationMiddleware, validationMiddleware(CreateProductTypeDto, true), this.updateProductTypeById);
+        this.router.delete(`${this.path}/:id`,authMiddleware,adminAuthorizationMiddleware, this.deleteOneProductTypeById);
+        this.router.post(this.path,authMiddleware,adminAuthorizationMiddleware, validationMiddleware(CreateProductTypeDto), this.addOneProductType);
+        this.router.get(`${this.path}/codes/:code`, authMiddleware, this.isCodeTaken);
+        this.router.get(`${this.path}/:id/codes/:code`,authMiddleware, this.isCodeTakenForUpdate);
     }
 
     private isCodeTaken = async (request: express.Request, response: express.Response, next: express.NextFunction) => {

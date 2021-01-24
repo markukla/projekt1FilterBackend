@@ -35,7 +35,7 @@ class UserController implements Controller{
         this.router.patch(`${this.path}/:id/changePassword`,authMiddleware,adminAuthorizationMiddleware, validationMiddleware(CHangePasswordByAdminDto, true), this.changePasswordByAdmin);
         this.router.patch(`${this.path}/:id/blockOrUnblock`,authMiddleware,adminAuthorizationMiddleware, validationMiddleware(BlockUserDto, true), this.blockOrUnblockUser)
         this.router.delete(`${this.path}/:id`,authMiddleware,adminAuthorizationMiddleware, this.deleteOneUserById);
-        this.router.post(this.path,validationMiddleware(CreatePrivilegedUserDto), this.registerOneUser);
+        this.router.post(this.path, authMiddleware,adminAuthorizationMiddleware,validationMiddleware(CreatePrivilegedUserDto), this.registerOneUser);
      this.router.get(`${this.path}/admins`,authMiddleware,adminAuthorizationMiddleware, this.getAllAdmins);
         this.router.get(`${this.path}/editors`,authMiddleware,adminAuthorizationMiddleware, this.getAllEditors);
         this.router.get(`${this.path}/emails/:email`,authMiddleware,adminAuthorizationMiddleware, this.isEmailTaken)

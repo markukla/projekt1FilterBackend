@@ -24,9 +24,9 @@ class DimensionCodeController implements Controller{
         this.router.get(this.path, authMiddleware,this.getAllDimensions);
         this.router.get(`${this.path}/:id`, authMiddleware, this.getOneDimensionCodeById);
         this.router.get(`${this.path}/codes/:code`,authMiddleware,adminAuthorizationMiddleware, this.dimensionWithThisCodeExists);
-        this.router.get(`${this.path}/roles/indexDimensions/first`, this.getAllFirstIndexDimensions);
-        this.router.get(`${this.path}/roles/indexDimensions/second`, this.getAllSecondIndexDimensions)
-        this.router.get(`${this.path}/roles/indexDimensions/non`, this.getAllNoIndexRelateDimensionCodes)
+        this.router.get(`${this.path}/roles/indexDimensions/first`, authMiddleware, this.getAllFirstIndexDimensions);
+        this.router.get(`${this.path}/roles/indexDimensions/second`, authMiddleware, this.getAllSecondIndexDimensions)
+        this.router.get(`${this.path}/roles/indexDimensions/non`, authMiddleware, this.getAllNoIndexRelateDimensionCodes)
         this.router.patch(`${this.path}/:id`, authMiddleware,adminAuthorizationMiddleware, validationMiddleware(CreateDimensionCodeDto, true), this.updateDimensionCode);
         this.router.delete(`${this.path}/:id`,authMiddleware,adminAuthorizationMiddleware, this.deleteOneDimensionById);
         this.router.post(this.path, authMiddleware,adminAuthorizationMiddleware, validationMiddleware(CreateDimensionCodeDto), this.addOneDimensionCode);

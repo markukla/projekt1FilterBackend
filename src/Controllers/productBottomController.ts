@@ -6,6 +6,8 @@ import ProductBottomService from "../RepositoryServices/productBottomRepository"
 import CreateProductBottomDto from "../Models/Products/createProductBottom.dto";
 import ProductBottom from "../Models/Products/productBottom.entity";
 import ProductBottomNotFoundException from "../Exceptions/ProductBottomNotFoundException";
+import authMiddleware from "../middleware/auth.middleware";
+import adminAuthorizationMiddleware from "../middleware/adminAuthorization.middleware";
 
 
 class ProductBottomController implements Controller {
@@ -18,13 +20,13 @@ class ProductBottomController implements Controller {
     }
 
     private initializeRoutes() {
-        this.router.get(this.path, this.getAllProductBottoms);
-        this.router.get(`${this.path}/:id`, this.getOneProductBottomById);
-        this.router.patch(`${this.path}/:id`, validationMiddleware(CreateProductBottomDto, true), this.updateProductTypeById);
-        this.router.delete(`${this.path}/:id`, this.deleteOneProductBottomById);
-        this.router.post(this.path, validationMiddleware(CreateProductBottomDto), this.addOneProductBottom);
-        this.router.get(`${this.path}/codes/:code`, this.isCodeTaken);
-        this.router.get(`${this.path}/:id/codes/:code`, this.isCodeTakenForUpdate);
+        this.router.get(this.path, authMiddleware, this.getAllProductBottoms);
+        this.router.get(`${this.path}/:id`, authMiddleware, this.getOneProductBottomById);
+        this.router.patch(`${this.path}/:id`,  authMiddleware,adminAuthorizationMiddleware, validationMiddleware(CreateProductBottomDto, true), this.updateProductTypeById);
+        this.router.delete(`${this.path}/:id`, authMiddleware,adminAuthorizationMiddleware, this.deleteOneProductBottomById);
+        this.router.post(this.path, authMiddleware,adminAuthorizationMiddleware, validationMiddleware(CreateProductBottomDto), this.addOneProductBottom);
+        this.router.get(`${this.path}/codes/:code`,authMiddleware, this.isCodeTaken);
+        this.router.get(`${this.path}/:id/codes/:code`,authMiddleware, this.isCodeTakenForUpdate);
     }
 
     private isCodeTaken = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
