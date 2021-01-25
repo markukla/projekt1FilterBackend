@@ -12,8 +12,8 @@ class UsersExampleForTests {
     public correctUnhashedPasswordOfexampleUserInDatabase: string = "Nicram12";
     public wrongUnhashedPasswordOfexampleUserInDatabase: string = "Nicrrerere12";
     public activeAdminUserExample: User = {
-        fulName: 'John Smith',
-        email: 'john@smith.com',
+        fulName: 'Jacek Luczak',
+        email: 'jacek.luczak@outlook.com',
         password: this.hashedPassword,
         active: true,
         id: 1,
@@ -22,8 +22,8 @@ class UsersExampleForTests {
         code: null
     }
     public inactiveAdminUserExample: User = {
-        fulName: 'John Snow',
-        email: 'john@snow.com',
+        fulName: 'Jan Kowalski',
+        email: 'jan@kowalski.com',
         password: this.hashedPassword,
         active: false,
         id: 2,
@@ -32,8 +32,8 @@ class UsersExampleForTests {
         code: null
     }
     public activeEditorUserExample: User = {
-        fulName: 'John vader',
-        email: 'john@vader.com',
+        fulName: 'Jacek Nowak',
+        email: 'jacek@nowak.com',
         password: this.hashedPassword,
         active: true,
         id: 3,
@@ -42,8 +42,8 @@ class UsersExampleForTests {
         code: null
     }
     public inactiveEditorUserExample: User = {
-        fulName: 'Marcin Kukla',
-        email: 'marcin@kukla.com',
+        fulName: 'Piotr Nowak',
+        email: 'piotr@nowak.com',
         password: this.hashedPassword,
         active: true,
         id: 3,
@@ -52,7 +52,7 @@ class UsersExampleForTests {
         code: null
     }
     public activePartnerUserExample: User = {
-        fulName: 'Marian kukla',
+        fulName: 'Marian Kukla',
         email: 'marian@kukla.com',
         password: this.hashedPassword,
         active: true,
