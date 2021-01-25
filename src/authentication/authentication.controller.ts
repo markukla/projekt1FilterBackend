@@ -29,7 +29,7 @@ class AuthenticationController implements Controller {
   private initializeRoutes() {
     this.router.post(`${this.path}/login`, validationMiddleware(LogInDto), this.loggingIn);
       this.router.patch(`${this.path}/changePassword`, authMiddleware,validationMiddleware(ChangePasswordDto), this.changePaswordByLoggedUser);//optional allows users to change their password if are logged in
-      this.router.post(`${this.path}/logout`, this.loggingOut)
+      this.router.get(`${this.path}/logout`, this.loggingOut)
   }
 
   private loggingIn = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
@@ -67,15 +67,20 @@ class AuthenticationController implements Controller {
         }
     }
 
-    private loggingOut = async (request: express.Request, response: express.Response) => {
-      const tokenToSaveAsBlackListed:string=request.cookies.Authorization;
-      console.log(`${tokenToSaveAsBlackListed}`);
-      const blackListedToken=await this.manager.save(BlackListedToken,new BlackListedToken(tokenToSaveAsBlackListed));
-        response.setHeader('Set-Cookie', ['Authorization=;Max-age=0']);
-        response.send({
-            status:200,
-            message:"you are logged out"
-        });
+    private loggingOut = async (request: RequestWithUser, response: express.Response, next: express.NextFunction) => {
+      const tokenToSaveAsBlackListed = request.header('Authorization');
+      console.log(`token to save as blackListed= ${tokenToSaveAsBlackListed}`);
+      try {
+          const blackListedToken=await this.manager.save(BlackListedToken,new BlackListedToken(tokenToSaveAsBlackListed));
+          response.send({
+              status:200,
+              messageToUser:"you are logged out"
+          });
+          console.log('log out message sended');
+      } catch (error) {
+          next(error);
+      }
+
     }
 
 
