@@ -9,7 +9,8 @@ class LanguageDto {
     languageCode: string;
     @IsString()
     languageName: string;
-
+    @IsString()
+    flagUrl: string;
     active: boolean;
 }
 

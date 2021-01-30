@@ -11,6 +11,8 @@ class Language {
     languageName: string;
     @Column()
     active: boolean;
+    @Column({nullable: true})
+    flagUrl: string;
 }
 
 export default Language;

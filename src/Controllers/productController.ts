@@ -211,7 +211,7 @@ class ProductController implements Controller{
 
 
 
-        if (path.extname(req.file.originalname).toLowerCase() === ".png") {
+        if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" ) {
             fs.rename(tempPath, orginalDrawingPath, err => {
                 if (err) {
                     //return this.handleError(err, res);
