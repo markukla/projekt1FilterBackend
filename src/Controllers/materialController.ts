@@ -38,6 +38,8 @@ class MaterialController implements Controller{
         this.router.patch(`${this.path}/:id`,authMiddleware,adminAuthorizationMiddleware, validationMiddleware(CreateMaterialDto, true), this.updateMaterialById);
         this.router.delete(`${this.path}/:id`,authMiddleware,adminAuthorizationMiddleware, this.deleteOneMaterialById);
         this.router.post(this.path, authMiddleware,adminAuthorizationMiddleware, validationMiddleware(CreateMaterialDto), this.addOneMaterial);
+        this.router.post(`${this.path}/codes`, authMiddleware,adminAuthorizationMiddleware, this.findMaterialByCode);
+        this.router.post(`${this.path}/names`, authMiddleware,adminAuthorizationMiddleware, this.findMaterialByName);
         this.router.get(`${this.path}/codes/:code`,authMiddleware,adminAuthorizationMiddleware, this.materialWithThisCodeExist);
         this.router.get(`${this.path}/names/:name`,authMiddleware,adminAuthorizationMiddleware, this.materialWithThisNameExist);
     }
@@ -134,6 +136,38 @@ const materialEndpoint: MaterialEndpoint = {...material};
         catch (error) {
             next(error);
         }
+
+    }
+    private findMaterialByCode = async (request: express.Request, response: express.Response, next: express.NextFunction)=>{
+
+
+        const code: string = request.body.code;
+        try {
+            const foundMaterial = await this.service.findOneMaterialByMaterialCode(code);
+
+            response.send(foundMaterial);
+        }
+        catch (error) {
+            next(error);
+        }
+
+
+
+    }
+    private findMaterialByName = async (request: express.Request, response: express.Response, next: express.NextFunction)=>{
+
+
+        const code: string = request.body.name;
+        try {
+            const foundMaterial = await this.service.findOneMaterialByMaterialName(code);
+
+            response.send(foundMaterial);
+        }
+        catch (error) {
+            next(error);
+        }
+
+
 
     }
 
