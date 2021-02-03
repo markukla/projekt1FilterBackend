@@ -74,10 +74,7 @@ class ProductController implements Controller{
         try {
             const product:Product = await this.service.addOneProduct(productData); // it is probably wrong path
 
-            res.send({
-                message:"new Product added:",
-                product:product
-            });
+            res.send(product);
         } catch (error) {
             next(error);
         }

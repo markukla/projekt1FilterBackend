@@ -66,10 +66,7 @@ class OrderController implements Controller {
         try {
             const order: Order = await this.service.addNewOrder(orderData); // it is probably wrong path
 
-            res.send({
-                message: "new Order added:",
-                order: order
-            });
+            res.send(order);
         } catch (error) {
             console.log(`${error.message}`)
             next(error);
@@ -83,10 +80,7 @@ class OrderController implements Controller {
         try {
             const order: Order = await this.service.addNewVersionOfOrder(orderData, req.params.id); // it is probably wrong path
 
-            res.send({
-                message: "new order version added:",
-                order: order
-            });
+            res.send(order);
         } catch (error) {
             next(error);
         }

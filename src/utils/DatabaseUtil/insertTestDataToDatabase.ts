@@ -22,10 +22,10 @@ const roles:Role[]=[new Role(RoleEnum.PARTNER),new Role(RoleEnum.EDITOR),new Rol
 async function insertTestUsersToDatabase() {
     const manager=getManager();
     const usersInDatabse: User[] = await manager.find(User);
-    if(usersInDatabse.length ===0) {
+   // if(usersInDatabse.length ===0) {
         await manager.save(User,users);
         console.log("test users inserted to database")
-    }
+   // }
 }
 async function insertRolesToDatabase(){
 
