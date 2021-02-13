@@ -32,6 +32,7 @@ class ProductService implements RepositoryService {
             productTop: createProductDto.productTop,
             productBottom: createProductDto.productBottom,
             productType: createProductDto.productType,
+            softDeleteDate: null
 
 
         });
@@ -43,7 +44,9 @@ class ProductService implements RepositoryService {
 
 
     public async findAllProducts(): Promise<Product[]> {
-        const foundProducts: Product[] = await this.repository.find();
+        const foundProducts: Product[] = await this.repository.find(
+            {softDeleteDate: null}
+        );
 
         return foundProducts;
 

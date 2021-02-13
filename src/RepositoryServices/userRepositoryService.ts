@@ -28,7 +28,7 @@ import DimensionCodeNotFoundException from "../Exceptions/DimensionCodeNotFoundE
 class UserService implements RepositoryService {
 
     public manager: EntityManager = getManager();
-    public repository=getRepository(User);
+    public repository = getRepository(User);
 
 
     // In this app privileged users are admins and editors. Editor can be changed to admin and admin to editor
@@ -37,19 +37,20 @@ class UserService implements RepositoryService {
     public async findUserByEmail(email: string): Promise<User> {
 
         const foundUser = await this.manager.findOne(User,
-            {email: email},
+            {
+                email: email,
+                softDeleteDate: null
+            },
             {relations: ['roles']});
 
-            return foundUser;
-
-
-
+        return foundUser;
 
 
     }
+
     public async findUserById(id: string): Promise<User> {  // user here reference to all kind of users so business partners and privilliged users
 
-        const foundUser = await this.manager.findOne(User,id,
+        const foundUser = await this.manager.findOne(User, id,
 
             {relations: ['roles']});
 
@@ -60,14 +61,12 @@ class UserService implements RepositoryService {
         return foundUser;
 
 
-
-
-
     }
 
 
     public async registerPrivilegedUser(userData: CreatePrivilegedUserDto): Promise<User> {
-        if (await this.findUserByEmail(userData.email)) {
+        const userWithThisEmailInDatabase = await this.findUserByEmail(userData.email);
+        if (userWithThisEmailInDatabase && userWithThisEmailInDatabase.softDeleteDate === null) {
             throw new UserWithThatEmailAlreadyExistsException(userData.email);
         }
         const validationResult: PasswordValidationResult = validatePassword(userData.password); // 
@@ -111,7 +110,7 @@ class UserService implements RepositoryService {
 
 
         allUsers.forEach(user => {
-            if (this.UserHasPartnerRole(user) === false) {
+            if (this.UserHasPartnerRole(user) === false && user.softDeleteDate === null) {
                 adminOrEditors.push(user);
             }
         });
@@ -128,7 +127,7 @@ class UserService implements RepositoryService {
 
 
         allUsers.forEach(user => {
-            if (this.UserHasAdminRole(user) === true) {
+            if (this.UserHasAdminRole(user) === true && user.softDeleteDate === null) {
                 admins.push(user);
             }
         });
@@ -145,7 +144,7 @@ class UserService implements RepositoryService {
 
 
         allUsers.forEach(user => {
-            if (this.UserHasEditorRoleButIsNotAdmin(user) === true) {
+            if (this.UserHasEditorRoleButIsNotAdmin(user) === true && user.softDeleteDate === null) {
                 editors.push(user);
             }
         });
@@ -178,7 +177,10 @@ class UserService implements RepositoryService {
         if (privilligedUserToupdate) {
             const userWithThisEmail: User =
                 await this.manager.findOne(User,
-                    {email: userData.email},
+                    {
+                        email: userData.email,
+                        softDeleteDate: null
+                    },
                     {relations: ['roles']});
 
 
@@ -214,9 +216,9 @@ class UserService implements RepositoryService {
 
     }
 
-    public deletePrivilegedUserById = async (id: number):Promise<boolean> => {
+    public deletePrivilegedUserById = async (id: number): Promise<boolean> => {
         const foundPriviligedUser = await this.findOnePrivilegedUserById(String(id));
-        let softDeletedRecord:User;
+        let softDeletedRecord: User;
         const recordToDelte = foundPriviligedUser;
         // dont allow to delete partners on user endpoint
         if (foundPriviligedUser) {
@@ -224,15 +226,13 @@ class UserService implements RepositoryService {
                 ...recordToDelte,
                 softDeleteDate: new Date()
             };
-            softDeletedRecord= await this.repository.save(recordTosoftDelete);
-        }
-        else {
+            softDeletedRecord = await this.repository.save(recordTosoftDelete);
+        } else {
             throw new PrivilligedUserNotFoundException(String(id));
         }
-        if(softDeletedRecord&&softDeletedRecord.softDeleteDate) {
+        if (softDeletedRecord && softDeletedRecord.softDeleteDate) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -266,12 +266,13 @@ class UserService implements RepositoryService {
 
     // business partners are app users with lowest priviliges.
     public async registerBusinessPartner(businessPartnerdata: CreateBusinessPartnerDto): Promise<User> {
-        if (await this.findUserByEmail(businessPartnerdata.email)) {
+        const partnerWithThisEmailInDatabae = await this.findUserByEmail(businessPartnerdata.email)
+        if (partnerWithThisEmailInDatabae && partnerWithThisEmailInDatabae.softDeleteDate === null) {
             throw new UserWithThatEmailAlreadyExistsException(businessPartnerdata.email);
         }
         const businesPartnerRoles: Role[] = [new Role(RoleEnum.PARTNER)];
-        const validationResult:PasswordValidationResult = validatePassword(businessPartnerdata.password);
-        if(validationResult.validatedPassword){
+        const validationResult: PasswordValidationResult = validatePassword(businessPartnerdata.password);
+        if (validationResult.validatedPassword) {
             const hashedPassword = await bcrypt.hash(validationResult.validatedPassword, 10);
             const businesPartner = this.manager.create(User, {
                 ...businessPartnerdata,
@@ -283,8 +284,7 @@ class UserService implements RepositoryService {
             businesPartner.password = undefined;
 
             return businesPartner;
-        }
-        else if(validationResult.foultList) {
+        } else if (validationResult.foultList) {
             throw new WeekPasswordException(validationResult.foultList)
         }
 
@@ -294,11 +294,11 @@ class UserService implements RepositoryService {
     public getAllBusinessPartners = async (): Promise<User[]> => {
         // in relation option: it takes table name as paramter, not enity name
 
-        const allUsers: User[] = await this.manager.find(User, { relations: ['roles'] });
+        const allUsers: User[] = await this.manager.find(User, {relations: ['roles']});
         const businesPartners: User[] = [];
 
         allUsers.forEach(user => {
-            if (this.UserHasPartnerRole(user)) // if user is business partner
+            if (this.UserHasPartnerRole(user) && user.softDeleteDate === null) // if user is business partner
             {
                 businesPartners.push(user);
             }
@@ -309,7 +309,7 @@ class UserService implements RepositoryService {
     public findOnePartnerById = async (id: string): Promise<User> => {
 
 
-        const foundUser: User = await this.manager.findOne(User, id, {relations: ['roles','ordersOfPartner']});
+        const foundUser: User = await this.manager.findOne(User, id, {relations: ['roles', 'ordersOfPartner']});
         if (!foundUser) {
             throw new BusinessPartnerNotFoundException(String(id));
         }
@@ -336,10 +336,12 @@ class UserService implements RepositoryService {
 
 
         // dont allow to change email if email is asigned to other user or businessPartner, becasuse it make proper log in process imposssible
-        const userWithThisEmail: User =
-            await this.manager.findOne(User,
-                {email: businesesPartnerData.email},
-                {relations: ['roles']});
+        const userWithThisEmail: User = await this.manager.findOne(User,
+            {
+                email: businesesPartnerData.email,
+                softDeleteDate: null
+            },
+            {relations: ['roles']});
 
         const otherUserWithThisEmailAlreadyExist: boolean = (userWithThisEmail && userWithThisEmail.id !== id);
         if (otherUserWithThisEmailAlreadyExist) {
@@ -359,9 +361,9 @@ class UserService implements RepositoryService {
 
     }
 
-    public deletePartnerById = async (id: number):Promise<boolean> => {
+    public deletePartnerById = async (id: number): Promise<boolean> => {
         const foundUser = await this.findOnePartnerById(String(id));
-        let softDeletedRecord:User;
+        let softDeletedRecord: User;
         const recordToDelte = foundUser;
         if (!this.UserHasPartnerRole(foundUser)) {
             throw new BusinessPartnerNotFoundException(String(id));
@@ -370,11 +372,10 @@ class UserService implements RepositoryService {
             ...recordToDelte,
             softDeleteDate: new Date()
         };
-        softDeletedRecord= await this.repository.save(recordTosoftDelete);
-        if(softDeletedRecord&&softDeletedRecord.softDeleteDate) {
+        softDeletedRecord = await this.repository.save(recordTosoftDelete);
+        if (softDeletedRecord && softDeletedRecord.softDeleteDate) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
 
@@ -385,7 +386,7 @@ class UserService implements RepositoryService {
         const foundPartnerdUser = await this.findOnePartnerById(String(businessPartner.id));
         if (foundPartnerdUser) {
 
-            const validationResult:PasswordValidationResult = validatePassword(passwordData.newPassword);
+            const validationResult: PasswordValidationResult = validatePassword(passwordData.newPassword);
 
 
             if (validationResult.validatedPassword) { //
@@ -411,18 +412,17 @@ class UserService implements RepositoryService {
     public blockOrUnblockUser = async (user: User, activeStatusData: BlockUserDto): Promise<User> => {
         const foundUser = await this.findUserById(String(user.id));
         if (foundUser) {
-const active: boolean = activeStatusData.active;
+            const active: boolean = activeStatusData.active;
 
-                const userWithChangedActiveStatus = this.manager.create(User, {
-                    ...user,
-                    active: active
+            const userWithChangedActiveStatus = this.manager.create(User, {
+                ...user,
+                active: active
 
-                });
-                const updatedUser = await this.manager.save(User, userWithChangedActiveStatus);
-                return updatedUser;
-            }
-            }
-
+            });
+            const updatedUser = await this.manager.save(User, userWithChangedActiveStatus);
+            return updatedUser;
+        }
+    }
 
 
     public UserHasPartnerRole = (user: User): boolean => {

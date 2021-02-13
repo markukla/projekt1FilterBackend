@@ -11,7 +11,7 @@ class ProductBottom {
     @Column({ type:"jsonb"})
     localizedNames: LocalizedName [];
 
-    @Column({unique:true})
+    @Column()
     code:string;
     @OneToMany(()=>Product,(productWithThisBottom:Product)=>productWithThisBottom.productBottom)
     productsWithThisBottom?:Product[];

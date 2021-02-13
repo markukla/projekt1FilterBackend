@@ -9,7 +9,7 @@ import DimensionRoleEnum from "./dimensionRoleEnum";
 class DimensionCode {
     @PrimaryGeneratedColumn()
     public id?: number;
-    @Column({unique:true})
+    @Column()
     dimensionCode:string;
 
     @Column({ type:"jsonb"})

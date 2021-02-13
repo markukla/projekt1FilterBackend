@@ -29,7 +29,8 @@ class ProductTypeService implements RepositoryService {
 
     public async findOneProductTypeByProductTypeCode(createProductTypeDto: CreateProductTypeDto): Promise<ProductType> {
         const foundProduct: ProductType = await this.repository.findOne({
-            code: createProductTypeDto.code
+            code: createProductTypeDto.code,
+            softDeleteDate: null
         },{relations:["topsForThisProductType","bottomsForThisProductType"]});
 
         return foundProduct;
@@ -48,8 +49,8 @@ class ProductTypeService implements RepositoryService {
 
     public async findAllProductsTypes(): Promise<ProductType[]> {
         const foundProductTypes: ProductType[] = await this.repository.find({relations:["topsForThisProductType","bottomsForThisProductType"]});
-
-        return foundProductTypes;
+        const foundNotDeletedProductTypes: ProductType[] = foundProductTypes.filter(productType => productType.softDeleteDate === null);
+        return foundNotDeletedProductTypes;
 
     }
 
