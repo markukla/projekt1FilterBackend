@@ -1,6 +1,5 @@
 
 import App from './app';
-
 import 'dotenv/config';
 import 'reflect-metadata';
 import {createConnection} from 'typeorm';

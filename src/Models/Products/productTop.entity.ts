@@ -18,7 +18,8 @@ class ProductTop {
     productsWithThisTop?:Product[]
     @ManyToMany(()=>ProductType,(productTypeswithThisTop:ProductType)=>productTypeswithThisTop.topsForThisProductType)
     productTypeswithThisTop?:ProductType[]
-
+    @Column({nullable: true})
+    softDeleteDate?:Date;
 }
 
 export default ProductTop;

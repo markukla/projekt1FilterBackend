@@ -13,6 +13,8 @@ class Vocabulary {
     variableName:string;
     @Column({ type:"jsonb"})
     localizedNames: LocalizedName [];
+    @Column({nullable: true})
+    softDeleteDate?:Date;
 
 }
 export default Vocabulary;

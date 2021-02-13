@@ -17,7 +17,8 @@ class ProductBottom {
     productsWithThisBottom?:Product[];
     @ManyToMany(()=>ProductType,(productType:ProductType)=>productType.bottomsForThisProductType)
     productTypesWithThisBottom?:ProductType[]
-
+    @Column({nullable: true})
+    softDeleteDate?:Date;
 
 
 

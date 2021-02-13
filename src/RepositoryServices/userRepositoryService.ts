@@ -22,6 +22,8 @@ import PrivilligedUserNotFoundException from "../Exceptions/PrivilligedUserNotFo
 import ProductNotFoundExceptionn from "../Exceptions/ProductNotFoundException";
 import CHangePasswordByAdminDto from "../Models/Users/changePasswordByAdmin.dto";
 import BlockUserDto from "../Models/Users/blockUser.dto";
+import Material from "../Models/Materials/material.entity";
+import DimensionCodeNotFoundException from "../Exceptions/DimensionCodeNotFoundException";
 
 class UserService implements RepositoryService {
 
@@ -212,16 +214,29 @@ class UserService implements RepositoryService {
 
     }
 
-    public deletePrivilegedUserById = async (id: number):Promise<DeleteResult> => {
+    public deletePrivilegedUserById = async (id: number):Promise<boolean> => {
         const foundPriviligedUser = await this.findOnePrivilegedUserById(String(id));
+        let softDeletedRecord:User;
+        const recordToDelte = foundPriviligedUser;
         // dont allow to delete partners on user endpoint
         if (foundPriviligedUser) {
-            const deleteResponse:DeleteResult = await this.manager.delete(User, id);
-            return deleteResponse;
+            const recordTosoftDelete: User = {
+                ...recordToDelte,
+                softDeleteDate: new Date()
+            };
+            softDeletedRecord= await this.repository.save(recordTosoftDelete);
         }
-
-
+        else {
+            throw new PrivilligedUserNotFoundException(String(id));
+        }
+        if(softDeletedRecord&&softDeletedRecord.softDeleteDate) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
+
     public changePrivilegedUserPasswordByAdmin = async (user: User, passwordData: CHangePasswordByAdminDto): Promise<User> => {
         const foundPrivilligedUser = await this.findOnePrivilegedUserById(String(user.id));
         if (foundPrivilligedUser) {
@@ -279,7 +294,7 @@ class UserService implements RepositoryService {
     public getAllBusinessPartners = async (): Promise<User[]> => {
         // in relation option: it takes table name as paramter, not enity name
 
-        const allUsers: User[] = await this.manager.find(User, {relations: ['roles']});
+        const allUsers: User[] = await this.manager.find(User, { relations: ['roles'] });
         const businesPartners: User[] = [];
 
         allUsers.forEach(user => {
@@ -344,15 +359,28 @@ class UserService implements RepositoryService {
 
     }
 
-    public deletePartnerById = async (id: number):Promise<DeleteResult> => {
+    public deletePartnerById = async (id: number):Promise<boolean> => {
         const foundUser = await this.findOnePartnerById(String(id));
+        let softDeletedRecord:User;
+        const recordToDelte = foundUser;
         if (!this.UserHasPartnerRole(foundUser)) {
             throw new BusinessPartnerNotFoundException(String(id));
         }
-        const deleteResponse:DeleteResult= await this.manager.delete(User, id);
-        return deleteResponse;
+        const recordTosoftDelete: User = {
+            ...recordToDelte,
+            softDeleteDate: new Date()
+        };
+        softDeletedRecord= await this.repository.save(recordTosoftDelete);
+        if(softDeletedRecord&&softDeletedRecord.softDeleteDate) {
+            return true;
+        }
+        else {
+            return false;
+        }
+
 
     }
+
     public changePartnerPasswordByEditor = async (businessPartner: User, passwordData: CHangePasswordByAdminDto): Promise<User> => {
         const foundPartnerdUser = await this.findOnePartnerById(String(businessPartner.id));
         if (foundPartnerdUser) {

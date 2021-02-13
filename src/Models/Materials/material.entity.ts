@@ -17,6 +17,8 @@ class Material{
 
     @OneToMany(()=>Order,(order:Order)=>order.productMaterial)
     orders?:Order[];
+    @Column({nullable: true})
+    softDeleteDate?:Date;
 
 
     constructor(materialCode: string, materialName: string) {

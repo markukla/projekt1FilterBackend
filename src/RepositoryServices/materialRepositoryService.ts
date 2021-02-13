@@ -5,6 +5,8 @@ import MaterialNotFoundExceptionn from "../Exceptions/MaterialNotFoundException"
 import CreateMaterialDto from "../Models/Materials/material.dto";
 import MaterialAlreadyExistsException from "../Exceptions/MaterialAlreadyExistsException";
 import User from "../Models/Users/user.entity";
+import DimensionCode from "../Models/DimesnionCodes/diemensionCode.entity";
+import DimensionCodeNotFoundException from "../Exceptions/DimensionCodeNotFoundException";
 
 
 class MaterialService implements RepositoryService{
@@ -35,7 +37,7 @@ class MaterialService implements RepositoryService{
     }
 
     public async findAllMaterials():Promise<Material[]>{
-        const foundMaterials:Material[]=await this.repository.find();
+        const foundMaterials:Material[]=await this.repository.find({softDeleteDate: null});
 
         return foundMaterials;
 
@@ -100,18 +102,27 @@ class MaterialService implements RepositoryService{
 
 
     }
-    public async deleteMaterialById(id:string):Promise<DeleteResult>{
-       const idOfExistingUser:boolean=await this.findOneMaterialById(id)!==null;
-       if(idOfExistingUser){
-           const deleteResult:DeleteResult= await this.repository.delete(id);
-           return deleteResult;
-       }
-
-
-
-
+    public async deleteMaterialById(id:string):Promise<boolean>{
+        let softDeletedRecord:Material;
+        const recordToDelte = await this.findOneMaterialById(id);
+        const idOfExistingRecord:boolean=recordToDelte!==null;
+        if(idOfExistingRecord){
+            const recordTosoftDelete: Material = {
+                ...recordToDelte,
+                softDeleteDate: new Date()
+            };
+            softDeletedRecord= await this.repository.save(recordTosoftDelete);
+        }
+        else {
+            throw new MaterialNotFoundExceptionn(id);
+        }
+        if(softDeletedRecord&&softDeletedRecord.softDeleteDate) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
-
 
 
 

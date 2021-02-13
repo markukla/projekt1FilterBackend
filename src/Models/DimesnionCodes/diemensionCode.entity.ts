@@ -16,6 +16,8 @@ class DimensionCode {
     localizedDimensionNames: LocalizedName [];
     @Column({default: DimensionRoleEnum.NOINDEXDIMENSION})
     dimensionRole: DimensionRoleEnum
+    @Column({nullable: true})
+    softDeleteDate?:Date;
 }
 
 export default DimensionCode;

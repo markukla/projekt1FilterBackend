@@ -13,6 +13,8 @@ class Language {
     active: boolean;
     @Column({nullable: true})
     flagUrl: string;
+    @Column({nullable: true})
+    softDeleteDate?:Date;
 }
 
 export default Language;
