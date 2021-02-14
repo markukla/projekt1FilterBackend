@@ -7,6 +7,7 @@ import * as typeorm from "typeorm";
 import {PostgresConnectionOptions} from "typeorm/driver/postgres/PostgresConnectionOptions";
 import {config_test} from "../../../ormconfig";
 import {
+    insertInitVocabulariesToDatabase,
     insertRolesToDatabase, insertTestDimensionCodesToDatabase, insertTestLanguagesToDatabase,
     insertTestMaterialsToDatabase,
     insertTestUsersToDatabase
@@ -22,6 +23,7 @@ async function connectToDatabase(config:PostgresConnectionOptions){
         await insertTestMaterialsToDatabase();
         await insertTestLanguagesToDatabase();
         await insertTestDimensionCodesToDatabase();
+        await insertInitVocabulariesToDatabase();
 
       } catch (error) {
         console.log('Error while connecting to the database', error);
