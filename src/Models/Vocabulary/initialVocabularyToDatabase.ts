@@ -91,6 +91,12 @@ const generalTable13: Vocabulary = {
 }
 initialVocabularyForDatabase.push(generalTable13);
 
+const generalTable14: Vocabulary = {
+    variableName: 'code',
+    localizedNames: [new LocalizedName('PL', 'Kod'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(generalTable14);
+
 
 
 
@@ -178,6 +184,241 @@ const generalUser16: Vocabulary = {
     localizedNames: [new LocalizedName('PL', 'Edytorzy'), new LocalizedName('CZE', 'CZE ....')]
 }
 initialVocabularyForDatabase.push(generalUser16)
+
+
+
+const orderName1: Vocabulary = {
+    variableName: 'orderNumber',
+    localizedNames: [new LocalizedName('PL', 'Nr Zapytania'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(orderName1)
+const orderName2: Vocabulary = {
+    variableName: 'creator',
+    localizedNames: [new LocalizedName('PL', 'Opracował'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(orderName2)
+const orderName3: Vocabulary = {
+    variableName: 'index',
+    localizedNames: [new LocalizedName('PL', 'Indeks'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(orderName3)
+const orderName4: Vocabulary = {
+    variableName: 'date',
+    localizedNames: [new LocalizedName('PL', 'Data'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(orderName4)
+const orderName5: Vocabulary = {
+    variableName: 'createNewOrder',
+    localizedNames: [new LocalizedName('PL', 'Dodaj Nowe Zapytanie'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(orderName5)
+const orderName6: Vocabulary = {
+    variableName: 'businessPartner',
+    localizedNames: [new LocalizedName('PL', 'Partner Handlowy'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(orderName6)
+
+const orderName7: Vocabulary = {
+    variableName: 'submitButtonNext',
+    localizedNames: [new LocalizedName('PL', 'Dalej'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(orderName7)
+const orderName8: Vocabulary = {
+    variableName: 'ChangeMaterialButtonInfo',
+    localizedNames: [new LocalizedName('PL', 'Zmień materiał'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(orderName8)
+const orderName9: Vocabulary = {
+    variableName: 'ConfirmMaterial',
+    localizedNames: [new LocalizedName('PL', 'Zatwierdź materiał'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(orderName9)
+const orderName10: Vocabulary = {
+    variableName: 'ChangePartner',
+    localizedNames: [new LocalizedName('PL', 'Zmień Partnera Handlowego'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(orderName10)
+const orderName11: Vocabulary = {
+    variableName: 'ConfirmPartner',
+    localizedNames: [new LocalizedName('PL', 'Zatwierdź Partnera Handlowego'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(orderName11)
+const orderName12: Vocabulary = {
+    variableName: 'ChangeProduct',
+    localizedNames: [new LocalizedName('PL', 'Zmień parametry produktu'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(orderName12)
+
+const orderName13: Vocabulary = {
+    variableName: 'ConfirmProduct',
+    localizedNames: [new LocalizedName('PL', 'Zatwierdź parametry produktu'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(orderName13)
+const orderName14: Vocabulary = {
+    variableName: 'submitOrder',
+    localizedNames: [new LocalizedName('PL', 'Złóż zapytanie'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(orderName14)
+const orderName15: Vocabulary = {
+    variableName: 'updateOrder',
+    localizedNames: [new LocalizedName('PL', 'Aktualizuj zapytanie'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(orderName15)
+const orderName16: Vocabulary = {
+    variableName: 'canNotFindProductForGivenParameters',
+    localizedNames: [new LocalizedName('PL', 'Nie znaleziono produktu o podanych parametrach.'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(orderName16)
+const orderName17: Vocabulary = {
+    variableName: 'orderAddSuccess',
+    localizedNames: [new LocalizedName('PL', 'Utworzono nowe zapytanie.'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(orderName17)
+const orderName18: Vocabulary = {
+    variableName: 'orderAddFailer',
+    localizedNames: [new LocalizedName('PL', 'Wystąpił bląd, nie udało się dodać nowego zapytania.'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(orderName18)
+
+const orderName19: Vocabulary = {
+    variableName: 'orderUpdateSuccess',
+    localizedNames: [new LocalizedName('PL', 'Zaktualizowano wybrane zapytanie'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(orderName19)
+const orderName20: Vocabulary = {
+    variableName: 'orderUpdateFailer',
+    localizedNames: [new LocalizedName('PL', 'Wystąpił błąd nie udało się zaktualizować zapytania.'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(orderName20)
+const orderName21: Vocabulary = {
+    variableName: 'orderDeleteSuccess',
+    localizedNames: [new LocalizedName('PL', 'Usunięto wybrane zapytanie.'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(orderName21)
+const orderName22: Vocabulary = {
+    variableName: 'orderDeleteFailer',
+    localizedNames: [new LocalizedName('PL', 'Wystąpił błąd, nie udało się usunąć wybranego zapytania.'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(orderName22)
+const orderName23: Vocabulary = {
+    variableName: 'choosingOptionFromListIsRequires',
+    localizedNames: [new LocalizedName('PL', 'Wybranie opcji z listy jest wymagane.'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(orderName23)
+const orderName24: Vocabulary = {
+    variableName: 'choosingAndConfrimPartnerIsRequired',
+    localizedNames: [new LocalizedName('PL', 'Wybranie i zatwierdzenie Partnera Handlowego jest wymagane.'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(orderName24)
+const orderName25: Vocabulary = {
+    variableName: 'choosingAndConfirmProductIsRequired',
+    localizedNames: [new LocalizedName('PL', 'Wybranie i zatwierdzenie produktu jest wymagane.'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(orderName25)
+const orderName26: Vocabulary = {
+    variableName: 'choosingAndConfirmMaterialIsRequired',
+    localizedNames: [new LocalizedName('PL', 'Wybranie i zatwierdzenie materiału jest wymagane.'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(orderName26)
+const orderName27: Vocabulary = {
+    variableName: 'changeDrawingParameters',
+    localizedNames: [new LocalizedName('PL', 'Zmień wymiary produktu'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(orderName27)
+const orderName28: Vocabulary = {
+    variableName: 'yourCommentToOrder',
+    localizedNames: [new LocalizedName('PL', 'Twoje uwagi do zamówienia'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(orderName28)
+const orderName29: Vocabulary = {
+    variableName: 'businessPartnerName',
+    localizedNames: [new LocalizedName('PL', 'Nazwa Partnera Handlowego'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(orderName29)
+const orderName30: Vocabulary = {
+    variableName: 'businessPartner',
+    localizedNames: [new LocalizedName('PL', 'Partner Handlowy'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(orderName30)
+const orderName31: Vocabulary = {
+    variableName: 'productType',
+    localizedNames: [new LocalizedName('PL', 'Typ produktu'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(orderName31)
+const orderName32: Vocabulary = {
+    variableName: 'productTop',
+    localizedNames: [new LocalizedName('PL', 'Wykończenie Góry'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(orderName32)
+const orderName33: Vocabulary = {
+    variableName: 'productBottom',
+    localizedNames: [new LocalizedName('PL', 'Wykończenie Dna'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(orderName33)
+const orderName34: Vocabulary = {
+    variableName: 'pressButtonToChooseProductByDrawing',
+    localizedNames: [new LocalizedName('PL', 'Naciśńij przycisk aby wybrać produkt na podstawie rysunku'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(orderName34)
+const orderName35: Vocabulary = {
+    variableName: 'chooseProductByDrawingButtonDescription',
+    localizedNames: [new LocalizedName('PL', 'Wybierz produkt klikając na rysunek'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(orderName35)
+const orderName36: Vocabulary = {
+    variableName: 'chooseProductByParameters',
+    localizedNames: [new LocalizedName('PL', 'Wybierz produkt określając jego parametry'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(orderName36)
+
+const orderName37: Vocabulary = {
+    variableName: 'productMaterial',
+    localizedNames: [new LocalizedName('PL', 'Materiał produktu'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(orderName37)
+
+
+
+
+
+
+
+const drawingTableName1: Vocabulary = {
+    variableName: 'workingTemperature',
+    localizedNames: [new LocalizedName('PL', 'Temperatura Pracy'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(drawingTableName1);
+
+const drawingTableName2: Vocabulary = {
+    variableName: 'antielectrostatic',
+    localizedNames: [new LocalizedName('PL', 'Antyelektrostatyczność'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(drawingTableName2);
+
+const drawingTableName3: Vocabulary = {
+    variableName: 'workingSide',
+    localizedNames: [new LocalizedName('PL', 'Strona Pracująca'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(drawingTableName3);
+const drawingTableName4: Vocabulary = {
+    variableName: 'workingSideExternal',
+    localizedNames: [new LocalizedName('PL', 'Zewnętrzna'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(drawingTableName4);
+const drawingTableName5: Vocabulary = {
+    variableName: 'workingSideInternal',
+    localizedNames: [new LocalizedName('PL', 'Wewnętrzna'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(drawingTableName5);
+
+const drawingTableName6: Vocabulary = {
+    variableName: 'material',
+    localizedNames: [new LocalizedName('PL', 'Materiał'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(drawingTableName6);
+
+
+
 
 export {initialVocabularyForDatabase};
 
