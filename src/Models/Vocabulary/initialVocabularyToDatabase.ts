@@ -97,6 +97,29 @@ const generalTable14: Vocabulary = {
 }
 initialVocabularyForDatabase.push(generalTable14);
 
+const generalTable15: Vocabulary = {
+    variableName: 'select',
+    localizedNames: [new LocalizedName('PL', 'Wybierz'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(generalTable15);
+const generalTable16: Vocabulary = {
+    variableName: 'closeButtonDescription',
+    localizedNames: [new LocalizedName('PL', 'Zamknij'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(generalTable16);
+const generalTable17: Vocabulary = {
+    variableName: 'thisFieldIsRequired',
+    localizedNames: [new LocalizedName('PL', 'To pole jest wymagane.'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(generalTable17);
+
+const generalTable18: Vocabulary = {
+    variableName: 'saveButtonDescription',
+    localizedNames: [new LocalizedName('PL', 'Zapisz'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(generalTable18);
+
+
 
 
 
@@ -184,6 +207,162 @@ const generalUser16: Vocabulary = {
     localizedNames: [new LocalizedName('PL', 'Edytorzy'), new LocalizedName('CZE', 'CZE ....')]
 }
 initialVocabularyForDatabase.push(generalUser16)
+
+const generalUser17: Vocabulary = {
+    variableName: 'userAddSuccessStatusMessage',
+    localizedNames: [new LocalizedName('PL', 'Dodano nowego użytkownika.'), new LocalizedName('CZE', 'Cze...')]
+}
+initialVocabularyForDatabase.push(generalUser17);
+const generalUser18: Vocabulary = {
+    variableName: 'userAddFailerStatusMessage',
+    localizedNames: [new LocalizedName('PL', 'Wystąpił błąd,  nie udało się dodać nowego użytkownika.'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(generalUser18);
+
+
+const generalUser19: Vocabulary = {
+    variableName: 'userUpdateSuccessStatusMessage',
+    localizedNames: [new LocalizedName('PL', 'Pomyślnie zaktualizowano dane wybranego użytkownika.'), new LocalizedName('CZE', 'Dodano nowy rekord do bazy danych po czesku')]
+}
+initialVocabularyForDatabase.push(generalUser19);
+const generalUser20: Vocabulary = {
+    variableName: 'userUpdateFailerStatusMessage',
+    localizedNames: [new LocalizedName('PL', 'Wystąpił błąd, nie udało się zaktualizować danych użytkownika.'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(generalUser20);
+
+const generalUser21: Vocabulary = {
+    variableName: 'userDeleteSuccessStatusMessage',
+    localizedNames: [new LocalizedName('PL', 'Usunięto wybranego użytkownika.'), new LocalizedName('CZE', 'Dodano nowy rekord do bazy danych po czesku')]
+}
+initialVocabularyForDatabase.push(generalUser21);
+const generalUser22: Vocabulary = {
+    variableName: 'userDeleteFailerStatusMessage',
+    localizedNames: [new LocalizedName('PL', 'Wystąpił błąd, nie udało się usunać wybranego użytkownika.'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(generalUser22);
+
+const generalUser23: Vocabulary = {
+    variableName: 'partnerAddSuccessStatusMessage',
+    localizedNames: [new LocalizedName('PL', 'Dodano nowego Partnera Handlowego.'), new LocalizedName('CZE', 'Cze...')]
+}
+initialVocabularyForDatabase.push(generalUser23);
+const generalUser24: Vocabulary = {
+    variableName: 'partnerAddFailerStatusMessage',
+    localizedNames: [new LocalizedName('PL', 'Wystąpił błąd,  nie udało się dodać nowego Partnera Handlowego.'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(generalUser24);
+
+
+const generalUser25: Vocabulary = {
+    variableName: 'partnerUpdateSuccessStatusMessage',
+    localizedNames: [new LocalizedName('PL', 'Pomyślnie zaktualizowano dane wybranego Partnera Handlowego.'), new LocalizedName('CZE', 'Dodano nowy rekord do bazy danych po czesku')]
+}
+initialVocabularyForDatabase.push(generalUser25);
+const generalUser26: Vocabulary = {
+    variableName: 'partnerUpdateFailerStatusMessage',
+    localizedNames: [new LocalizedName('PL', 'Wystąpił błąd, nie udało się zaktualizować danych Partnera Handlowego.'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(generalUser26);
+
+const generalUser27: Vocabulary = {
+    variableName: 'partnerDeleteSuccessStatusMessage',
+    localizedNames: [new LocalizedName('PL', 'Usunięto wybranego Partnera Handlowego.'), new LocalizedName('CZE', 'Dodano nowy rekord do bazy danych po czesku')]
+}
+initialVocabularyForDatabase.push(generalUser27);
+const generalUser28: Vocabulary = {
+    variableName: 'partnerDeleteFailerStatusMessage',
+    localizedNames: [new LocalizedName('PL', 'Wystąpił błąd, nie udało się usunać wybranego Partnera Handlowego.'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(generalUser28);
+
+const generalUser29: Vocabulary = {
+    variableName: 'updateBusinessPartner',
+    localizedNames: [new LocalizedName('PL', 'Aktualizuj dane wybranego partnera handlowego.'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(generalUser29);
+
+const generalUser30: Vocabulary = {
+    variableName: 'updateUser',
+    localizedNames: [new LocalizedName('PL', 'Aktualizuj dane wybranego użytkownika.'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(generalUser30);
+const generalUser31: Vocabulary = {
+    variableName: 'emailIsAlreadyTaken',
+    localizedNames: [new LocalizedName('PL', 'Podany email jest zajęty przez innego użytkownika.'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(generalUser31);
+
+const generalUser32: Vocabulary = {
+    variableName: 'emailMustBeValid',
+    localizedNames: [new LocalizedName('PL', 'Email musi być prawidłowym adresem email.'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(generalUser32);
+
+const generalUser33: Vocabulary = {
+    variableName: 'passwordIsRequired',
+    localizedNames: [new LocalizedName('PL', 'Podanie hasła jest wymagane.'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(generalUser33);
+
+const generalUser34: Vocabulary = {
+    variableName: 'passwordMustContain8Characters',
+    localizedNames: [new LocalizedName('PL', 'Hasło musi zawierać minimum 8 znaków.'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(generalUser34);
+
+const generalUser35: Vocabulary = {
+    variableName: 'passwordMustContain1CapitalLetter',
+    localizedNames: [new LocalizedName('PL', 'Hasło musi zawierać przynajmniej jedną dużą literę..'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(generalUser35);
+
+const generalUser36: Vocabulary = {
+    variableName: 'passwordMustContain2Digest',
+    localizedNames: [new LocalizedName('PL', 'Hasło musi zawierać co najmniej 2 cyfry.'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(generalUser36);
+
+const generalUser37: Vocabulary = {
+    variableName: 'passwordMustContain1smallLetter',
+    localizedNames: [new LocalizedName('PL', 'Hasło musi zawierać co najmniej jedną małą literę.'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(generalUser37);
+
+const generalUser38: Vocabulary = {
+    variableName: 'noMatchBetweenPasswords',
+    localizedNames: [new LocalizedName('PL', 'Podane hasła są niezgodne.'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(generalUser38);
+
+const generalUser39: Vocabulary = {
+    variableName: 'repeatPassword',
+    localizedNames: [new LocalizedName('PL', 'Powtórz hasło'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(generalUser39);
+
+const generalUser40: Vocabulary = {
+    variableName: 'repeatingPasswordIsRequired',
+    localizedNames: [new LocalizedName('PL', 'Powtórzenie hasła jest wymagane.'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(generalUser40);
+
+const generalUser41: Vocabulary = {
+    variableName: 'password',
+    localizedNames: [new LocalizedName('PL', 'Hasło'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(generalUser41);
+
+const generalUser42: Vocabulary = {
+    variableName: 'active',
+    localizedNames: [new LocalizedName('PL', 'Aktywny'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(generalUser42);
+
+
+
+
+
 
 
 
@@ -335,11 +514,7 @@ const orderName29: Vocabulary = {
     localizedNames: [new LocalizedName('PL', 'Nazwa Partnera Handlowego'), new LocalizedName('CZE', 'CZE ....')]
 }
 initialVocabularyForDatabase.push(orderName29)
-const orderName30: Vocabulary = {
-    variableName: 'businessPartner',
-    localizedNames: [new LocalizedName('PL', 'Partner Handlowy'), new LocalizedName('CZE', 'CZE ....')]
-}
-initialVocabularyForDatabase.push(orderName30)
+
 const orderName31: Vocabulary = {
     variableName: 'productType',
     localizedNames: [new LocalizedName('PL', 'Typ produktu'), new LocalizedName('CZE', 'CZE ....')]
