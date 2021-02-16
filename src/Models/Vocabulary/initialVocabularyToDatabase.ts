@@ -359,6 +359,37 @@ const generalUser42: Vocabulary = {
 }
 initialVocabularyForDatabase.push(generalUser42);
 
+const generalUser43: Vocabulary = {
+    variableName: 'passwordChangeSuccessStatus',
+    localizedNames: [new LocalizedName('PL', 'Hasło zostało zmienione.'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(generalUser43);
+
+const generalUser44: Vocabulary = {
+    variableName: 'passwordChangeFailerStatus',
+    localizedNames: [new LocalizedName('PL', 'Wystąpił błąd, nie udało się zmienić hasła.'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(generalUser44);
+
+const generalUser45: Vocabulary = {
+    variableName: 'admin',
+    localizedNames: [new LocalizedName('PL', 'Administator'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(generalUser45);
+
+const generalUser46: Vocabulary = {
+    variableName: 'editor',
+    localizedNames: [new LocalizedName('PL', 'Edytor'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(generalUser46);
+
+const generalUser47: Vocabulary = {
+    variableName: 'status',
+    localizedNames: [new LocalizedName('PL', 'Status'), new LocalizedName('CZE', 'CZE ....')]
+}
+initialVocabularyForDatabase.push(generalUser47);
+
+
 
 
 

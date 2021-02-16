@@ -1,8 +1,8 @@
 import {NextFunction, Response} from 'express';
 import * as jwt from 'jsonwebtoken';
 import {getManager, getRepository} from 'typeorm';
-import AuthenticationTokenMissingException from '../exceptions/AuthenticationTokenMissingException';
-import WrongAuthenticationTokenException from '../exceptions/WrongAuthenticationTokenException';
+import AuthenticationTokenMissingException from '../Exceptions/AuthenticationTokenMissingException';
+import WrongAuthenticationTokenException from '../Exceptions/WrongAuthenticationTokenException';
 import DataStoredInToken from '../interfaces/dataStoredInToken';
 
 import User from "../Models/Users/user.entity";
